@@ -18,6 +18,8 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            @can('admin')
+                
             <li>
                 <a href="/pengguna">
                     <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
@@ -25,7 +27,7 @@
                 </a>
             </li>
 
-            <li class="sidebar-menu-group-title">Master</li>
+            <li class="sidebar-menu-group-title">Riwayat</li>
 
             <li class="dropdown">
                 <a href="javascript:void(0)">
@@ -34,10 +36,10 @@
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="/pengajuan_lhr"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Data Kelahiran</a>
+                        <a href="/create_pengajuan_lhr"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Data Kelahiran</a>
                     </li>
                     <li>
-                        <a href="/pengajuan_mt"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Data Kematian</a>
+                        <a href="/create_pengajuan_mt"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Data Kematian</a>
                     </li>
                 </ul>
             </li>
@@ -45,7 +47,7 @@
             <li class="dropdown">
                 <a href="javascript:void(0)">
                     <iconify-icon icon="mingcute:storage-line" class="menu-icon"></iconify-icon>
-                    <span>Master Pengajuan</span>
+                    <span>Riwayat Pengajuan</span>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
@@ -71,6 +73,26 @@
                     </li>
                 </ul>
             </li>
+
+            @endcan
+
+            @can('user')
+            <li class="sidebar-menu-group-title">Menu</li>
+
+            <li>
+                <a href="/form-pengajuan">
+                    <iconify-icon icon="heroicons:document" class="menu-icon"></iconify-icon>
+                    <span>Form Pengajuan</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="/data-pengajuan">
+                    <iconify-icon icon="mingcute:storage-line" class="menu-icon"></iconify-icon>
+                    <span>Master Pengajuan</span>
+                </a>
+            </li>
+            @endcan
         </ul>
     </div>
 </aside>

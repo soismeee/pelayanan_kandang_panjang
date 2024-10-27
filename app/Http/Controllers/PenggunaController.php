@@ -14,6 +14,7 @@ class PenggunaController extends Controller
             'title' => 'Daftar Pengguna',
             'menu' => 'Pengguna',
             'submenu' => 'Pengguna',
+            'user' => User::all()
         ]);
     }
 
@@ -26,8 +27,37 @@ class PenggunaController extends Controller
         ]);
     }
 
-    public function validation($request){
+    public function json()
+    {
+        $columns = ['id', 'name', 'email', 'role', 'status'];
+        $orderBy = $columns[request()->input("order.0.column")];
+        $data = User::select('id', 'name', 'email', 'status', 'role');
 
+        if (request()->input("search.value")) {
+            $data = $data->where(function ($query) {
+                $query->whereRaw('name like ? ', ['%' . request()->input("search.value") . '%'])
+                    ->orWhereRaw('email like ? ', ['%' . request()->input("search.value") . '%'])
+                    ->orWhereRaw('role like ? ', ['%' . request()->input("search.value") . '%'])
+                    ->orWhereRaw('status like ? ', ['%' . request()->input("search.value") . '%']);
+            });
+        }
+
+        $recordsFiltered = $data->get()->count();
+        $data = $data->skip(request()->input('start'))->take(request()->input('length'))->orderBy($orderBy, request()->input("order.0.dir"))->get();
+        $recordsTotal = $data->count();
+        return response()->json([
+            'draw' => request()->input('draw'),
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data
+        ]);
+    }
+
+    public function validation($request){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+        ]);
     }
 
     public function store(Request $request)
@@ -39,15 +69,21 @@ class PenggunaController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->role = $request->role;
-        $user->status = $request->status;
+        $user->status = 'active';
         $user->save();
 
         return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil ditambahkan');
     }
 
-    public function show(string $id)
-    {
-        //
+    public function isActive(Request $request, $id){
+        try {
+            $user = User::findOrFail($id);
+            $user->status = $request->status;
+            $user->update();
+            return response()->json(['status' => 200, 'message' => "Status pengguna berhasil diubah"]);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 400, 'message' => "Status pengguna gagal diubah"], 400);
+        }
     }
 
     public function edit(string $id)
@@ -56,6 +92,7 @@ class PenggunaController extends Controller
             'title' => 'Tambah Pengguna',
             'menu' => 'Pengguna',
             'submenu' => 'Edit pengguna',
+            'user' => User::find($id)
         ]);
     }
 
@@ -69,7 +106,6 @@ class PenggunaController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->role = $request->role;
-        $user->status = $request->status;
         $user->update();
 
         return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil diubah');

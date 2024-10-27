@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -48,11 +49,15 @@ class AuthController extends Controller
             'password' => 'required|min:5|max:255'
         ]);
 
-        // $vaslidatedData['password'] = bcrypt($vaslidatedData['password']);
-        $vaslidatedData['password'] = Hash::make($vaslidatedData['password']);
-        User::create($vaslidatedData);
-        // $request->session()->flash('success', 'Registration successfull!! please login');
-        return redirect('login')->with('success', 'Registration successfull!! please login');
+        $user = new User();
+        $user->id = intval((microtime(true) * 10000));
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role = "user";
+        $user->status = 'inactive';
+        $user->save();
+        return redirect('login')->with('success', 'Registrasi berhasil!! silahkan login');
     }
 
     public function logout()
