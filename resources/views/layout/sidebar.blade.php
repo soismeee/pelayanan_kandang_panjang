@@ -36,10 +36,10 @@
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="/create_pengajuan_lhr"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Data Kelahiran</a>
+                        <a href="/pengajuan_kelahiran"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Data Kelahiran</a>
                     </li>
                     <li>
-                        <a href="/create_pengajuan_mt"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Data Kematian</a>
+                        <a href="/pengajuan_kematian"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Data Kematian</a>
                     </li>
                 </ul>
             </li>
@@ -51,10 +51,10 @@
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="/pengajuan_kelahiran"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Kelahiran</a>
+                        <a href="/riwayat_kelahiran"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Kelahiran</a>
                     </li>
                     <li>
-                        <a href="/pengajuan_kematian"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Kematian</a>
+                        <a href="/riwayat_kematian"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Kematian</a>
                     </li>
                 </ul>
             </li>

@@ -23,12 +23,25 @@ Route::post('/jsonPengguna', [PenggunaController::class, 'json'])->middleware('a
 Route::post('/penggunaDel/{id}', [PenggunaController::class, 'destroy'])->middleware('auth');
 Route::post('/penggunaAct/{id}', [PenggunaController::class, 'isActive'])->middleware('auth');
 
-Route::get('/create', [PelayananController::class, 'create'])->middleware('auth');
-Route::get('/create_pengajuan_lhr', [PelayananController::class, 'create_lhr'])->middleware('auth');
-Route::get('/create_pengajuan_mt', [PelayananController::class, 'create_mt'])->middleware('auth');
+Route::get('/data-pengajuan', [PelayananController::class, 'index'])->middleware('auth');
+Route::get('/form-pengajuan', [PelayananController::class, 'create'])->middleware('auth');
+Route::post('/storePengajuan', [PelayananController::class, 'store'])->middleware('auth');
+Route::post('/jsonPengajuan', [PelayananController::class, 'json'])->middleware('auth');
+Route::post('/pengajuanDel/{id}', [PelayananController::class, 'destroy'])->middleware('auth');
 
-Route::get('/pengajuan_kelahiran', [PelayananController::class, 'index_lhr'])->middleware('auth');
-Route::get('/pengajuan_kematian', [PelayananController::class, 'index_mt'])->middleware('auth');
 
-Route::get('/laporan_lhr', [LaporanController::class, 'index_lhr'])->middleware('auth');
-Route::get('/laporan_mt', [LaporanController::class, 'index_mt'])->middleware('auth');
+Route::get('/create_pengajuan_lhr', [PelayananController::class, 'createKelahiran'])->middleware('auth');
+Route::get('/pengajuan_kelahiran', [PelayananController::class, 'indexKelahiran'])->middleware('auth');
+Route::get('/riwayat_kelahiran', [PelayananController::class, 'riwayatKelahiran'])->middleware('auth');
+Route::post('/jsonKelahiran', [PelayananController::class, 'jsonKelahiran'])->middleware('auth');
+Route::post('/jsonRiwayatKelahiran', [PelayananController::class, 'jsonRiwayatKelahiran'])->middleware('auth');
+
+Route::get('/create_pengajuan_mt', [PelayananController::class, 'createKematian'])->middleware('auth');
+Route::get('/pengajuan_kematian', [PelayananController::class, 'indexKematian'])->middleware('auth');
+Route::post('/jsonKematian', [PelayananController::class, 'jsonKematian'])->middleware('auth');
+Route::post('/jsonRiwayatKematian', [PelayananController::class, 'jsonRiwayatKematian'])->middleware('auth');
+Route::get('/riwayat_kematian', [PelayananController::class, 'riwayatKematian'])->middleware('auth');
+
+
+Route::get('/laporan_lhr', [LaporanController::class, 'indexKelahiran'])->middleware('auth');
+Route::get('/laporan_mt', [LaporanController::class, 'indexKematian'])->middleware('auth');

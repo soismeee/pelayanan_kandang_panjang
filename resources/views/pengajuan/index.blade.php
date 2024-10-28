@@ -7,7 +7,7 @@
 @section('container')
 <div class="card basic-data-table">
     <div class="card-header">
-        <h5 class="card-title mb-0">Data Pengajuan Kematian</h5>
+        <h5 class="card-title mb-0">Data Pengajuan</h5>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -16,9 +16,8 @@
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Nama</th>
-                        <th scope="col">Orang tua</th>
-                        <th scope="col">Tgl Pengajuan</th>
-                        <th scope="col">Berkas</th>
+                        <th scope="col">Jenis Pengajuan</th>
+                        <th scope="col">Tanggal Pengajuan</th>
                         <th scope="col">Status</th>
                         <th scope="col">Aksi</th>
                     </tr>
@@ -43,7 +42,7 @@
             serverSide: true,
             responseive: true,
             ajax: {
-                url:"{{ url('jsonKematian') }}",
+                url:"{{ url('jsonPengajuan') }}",
                 type:"POST",
                 data:function(d){
                     d._token = "{{ csrf_token() }}"
@@ -61,14 +60,14 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return row.data_kelahiran[0].nama_bayi
+                        return row.nama_pelapor
                     }
                 },
                 {
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return "Ayah : " + row.data_kelahiran[0].nama_ayah + "<br /> Ibu : " + row.data_kelahiran[0].nama_ibu
+                        return row.jenis_pengajuan
                     }
                 },
                 {
@@ -76,13 +75,6 @@
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
                         return row.tanggal_pengajuan
-                    }
-                },
-                {
-                    "targets": "_all",
-                    "defaultContent": "-",
-                    "render": function(data, type, row, meta){
-                        return `<a href="#" class="btn btn-sm btn-primary">Lihat</a>`
                     }
                 },
                 {

@@ -13,4 +13,16 @@ class PengajuanLayanan extends Model
     
     protected $primaryKey = 'pengajuan_id';
     public $incrementing = false;
+
+    public function pelanggan(){
+        return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
+    }
+
+    public function dataKematian(){
+        return $this->hasMany(DataKematian::class, 'pengajuan_id');
+    }
+
+    public function dataKelahiran(){
+        return $this->hasMany(DataKelahiran::class, 'pengajuan_id');
+    }
 }

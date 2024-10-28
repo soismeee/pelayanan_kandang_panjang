@@ -43,7 +43,7 @@
             serverSide: true,
             responseive: true,
             ajax: {
-                url:"{{ url('jsonKematian') }}",
+                url:"{{ url('jsonRiwayatKematian') }}",
                 type:"POST",
                 data:function(d){
                     d._token = "{{ csrf_token() }}"

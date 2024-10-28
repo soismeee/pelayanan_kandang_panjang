@@ -10,4 +10,8 @@ class DataKelahiran extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function pengajuanPelayanan(){
+        return $this->belongsTo(PengajuanLayanan::class, 'pengajuan_id');
+    }
 }
