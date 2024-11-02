@@ -90,8 +90,8 @@
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
                         let span = `<span class="badge bg-primary">Pengajuan</span>`;
-                        if (row.status == 'pengajuan'){
-                            span = `<span class="badge bg-success">Selesai</span>`
+                        if (row.status == 'proses'){
+                            span = `<span class="badge bg-warning">Proses</span>`
                         }
                         return span;
                     }
@@ -101,10 +101,10 @@
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
                         return `
-                            <a href="/pengguna/`+row.id+`/edit" class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center">
+                            <a href="/pengajuan_kelahiran/`+row.pengajuan_id+`" class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center">
                                 <iconify-icon icon="majesticons:eye-line" class="icon text-xl"></iconify-icon>
                             </a>
-                            <a href="#" data-id="`+row.id+`" class="hapusdata w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
+                            <a href="#" data-id="`+row.pengajuan_id+`" class="hapusdata w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
                                 <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
                             </a>
                         `

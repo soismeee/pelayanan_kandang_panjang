@@ -40,11 +40,11 @@
                 </div>
                 <div class="col-auto">
                     <div class="d-flex flex-wrap align-items-center gap-3">
-                        <button type="button" data-theme-toggle class="w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center"></button>
+                        {{-- <button type="button" data-theme-toggle class="w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center"></button> --}}
 
                         <div class="dropdown">
                             <button class="d-flex justify-content-center align-items-center rounded-circle" type="button" data-bs-toggle="dropdown">
-                                <img src="/assets/images/user.png" alt="image" class="w-40-px h-40-px object-fit-cover rounded-circle">
+                                <img src="/assets/images/logo-fold.png" alt="image" class="w-40-px h-40-px object-fit-cover rounded-circle">
                             </button>
                             <div class="dropdown-menu to-top dropdown-menu-sm">
                                 <div class="py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
@@ -55,7 +55,7 @@
                                 </div>
                                 <ul class="to-top-list">
                                     <li>
-                                        <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3" href="view-profile.php">
+                                        <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3" href="/">
                                             <iconify-icon icon="solar:user-linear" class="icon text-xl"></iconify-icon> Profil saya
                                         </a>
                                     </li>

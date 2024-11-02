@@ -3,20 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
+use App\Models\PengajuanLayanan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashbaordController extends Controller
 {
     public function index(){
         $user = auth()->user();
-        $pelanggan = Pelanggan::where('user_id', $user->id)->count();
-        if ($user->role == "user" && $pelanggan == 0) {
+        $pelanggan = Pelanggan::where('user_id', $user->id);
+        if ($user->role == "user" && $pelanggan->count() == 0) {
             return view('home.first-page', [
                 'title' => 'Lengkapi data',
             ]);
         } else {
+            $data = [
+                'pengguna' => User::count(),
+                'pengajuan' => PengajuanLayanan::whereYear('tanggal_pengajuan', date('Y'))->count(),
+                'kelahiran' => PengajuanLayanan::where('jenis_pengajuan', 'kelahiran')->whereYear('tanggal_pengajuan', date('Y'))->count(),
+                'kematian' => PengajuanLayanan::where('jenis_pengajuan', 'kematian')->whereYear('tanggal_pengajuan', date('Y'))->count(),
+            ];
+            $pengajuan = PengajuanLayanan::where('status', 'pengajuan');
+            $user_pelanggan = $pelanggan->first();
+            if (auth()->user()->role == "user") {
+                $pengajuan->where('pelanggan_id', $user_pelanggan->pelanggan_id);
+            }
             return view('home.index', [
                 'title' => 'Dashboard',
+                'data' => $data,
+                'pengajuan' => $pengajuan->get()
             ]);
         }
     }

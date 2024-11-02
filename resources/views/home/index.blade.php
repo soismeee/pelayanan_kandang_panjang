@@ -2,7 +2,8 @@
 @section('container')
 
 <div class="row gy-4">
-
+    @can('admin')
+        
     <!-- Dashboard Widget Start -->
     <div class="col-xxl-3 col-sm-6">
         <div class="card px-24 py-16 shadow-none radius-8 border h-100 bg-gradient-start-3">
@@ -18,7 +19,7 @@
 
                         <div>
                             <span class="mb-2 fw-medium text-secondary-light text-md">Pengguna</span>
-                            <h6 class="fw-semibold my-1">5000</h6>
+                            <h6 class="fw-semibold my-1">{{ $data['pengguna'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -42,7 +43,7 @@
 
                         <div>
                             <span class="mb-2 fw-medium text-secondary-light text-md">Total Pengajuan</span>
-                            <h6 class="fw-semibold my-1">15000</h6>
+                            <h6 class="fw-semibold my-1">{{ $data['pengajuan'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -66,7 +67,7 @@
 
                         <div>
                             <span class="mb-2 fw-medium text-secondary-light text-md">Total Kelahiran</span>
-                            <h6 class="fw-semibold my-1">1000</h6>
+                            <h6 class="fw-semibold my-1">{{ $data['kelahiran'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -90,7 +91,7 @@
 
                         <div>
                             <span class="mb-2 fw-medium text-secondary-light text-md">Total Kematian</span>
-                            <h6 class="fw-semibold my-1">150</h6>
+                            <h6 class="fw-semibold my-1">{{ $data['kematian'] }}</h6>
                         </div>
                     </div>
                 </div>
@@ -98,25 +99,63 @@
         </div>
     </div>
     <!-- Dashboard Widget End -->
+    @endcan
+
+    @can('user')
+        <div class="col-xl-6">
+            <div class="card radius-12 overflow-hidden h-100 d-flex align-items-center flex-nowrap flex-row">
+                <div class="d-flex flex-shrink-0 w-170-px h-100">
+                    <img src="assets/images/pengajuan/kelahiran.png" class="h-100 w-100 object-fit-cover" alt="">
+                </div>
+                <div class="card-body p-16 flex-grow-1">
+                    <h5 class="card-title text-lg text-primary-light mb-6">Pengajuan data kelahiran</h5>
+                    <p class="card-text text-neutral-600 mb-16">Ajukan data kelahiran buah hati anda dengan mengisi formulir pengajuan seperti nama, jenis kelamin, tanggal lahir, tempat lahir, data diri dan KTP orang tua.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card radius-12 overflow-hidden h-100 d-flex align-items-center flex-nowrap flex-row flex-row-reverse">
+                <div class="d-flex flex-shrink-0 w-170-px h-100">
+                    <img src="assets/images/pengajuan/kematian.png" class="h-100 w-100 object-fit-cover" alt="">
+                </div>
+                <div class="card-body p-16 flex-grow-1">
+                    <h5 class="card-title text-lg text-primary-light mb-6">Pengajuan data kelahiran</h5>
+                    <p class="card-text text-neutral-600 mb-16">Ajukan data kematian orang kesayangan anda dengan mengisi formulir pengajuan seperti nama, jenis kelamin, tanggal kematian, tempat kematian, data diri dan Berkas lain.</p>
+                </div>
+            </div>
+        </div>
+    @endcan
 
     <!-- Revenue Statistics Start -->
     <div class="col-xxl-12">
         <div class="card h-100 radius-8 border-0">
             <div class="card-body p-24">
+                <label class="mb-3">Daftar pengajuan yang belum di proses</label>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="tabel-pengajuan">
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Nama</th>
                                 <th>Jenis Pengajuan</th>
                                 <th>Tanggal</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="4" class="text-center">Tidak ada data pengajuan</td>
-                            </tr>
+                            @forelse ($pengajuan as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->nama_pelapor }}</td>    
+                                    <td>{{ $item->jenis_pengajuan }}</td>    
+                                    <td>{{ date('d-m-Y', strtotime($item->tanggal_pengajuan)) }}</td>    
+                                    <td>{{ $item->status }}</td>    
+                                </tr>                                
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center">Tidak ada data pengajuan</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

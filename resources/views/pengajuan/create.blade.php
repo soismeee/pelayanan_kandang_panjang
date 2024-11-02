@@ -1,46 +1,52 @@
 @extends('layout.app')
+@push('css')
+<link rel="stylesheet" href="/assets/sweetalert2/sweetalert2.min.css">
+    
+@endpush
 @section('container')
-<div class="row gy-4">
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Formulir pengajuan data</h5>
-            </div>
-            <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                    <button id="kelahiran" class="btn btn-lg btn-success" data-jenis_pengajuan="kelahiran">Pengajuan Data Kelahiran</button>
-                    <button id="kematian" class="btn btn-lg btn-dark" data-jenis_pengajuan="kematian">Pengajuan Data Kematian</button>
+    <div class="row gy-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Formulir pengajuan data</h5>
                 </div>
-                <hr />
-                <form id="form-pengajuan">
-                    @csrf
-                    <div class="row">
-                        <strong>Data Pelapor</strong>
-                        <input type="hidden" name="jenis_pengajuan" id="jenis_pengajuan" class="form-control">
-                        <div class="col-md-6 mb-3">
-                            <label for="nama_pelapor">Nama Pelapor</label>
-                            <input type="text" class="form-control" name="nama_pelapor" id="nama_pelapor" placeholder="Masukan nama pelapor">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="nik_pelapor">nik Pelapor</label>
-                            <input type="text" class="form-control" name="nik_pelapor" id="nik_pelapor" placeholder="Masukan nik pelapor">
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <label for="alamat_pelapor">Alamat Pelapor</label>
-                            <textarea name="alamat_pelapor" id="alamat_pelapor" cols="5" rows="5" class="form-control"></textarea>
-                        </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <button id="kelahiran" class="btn btn-lg btn-success" data-jenis_pengajuan="kelahiran">Pengajuan Data Kelahiran</button>
+                        <button id="kematian" class="btn btn-lg btn-dark" data-jenis_pengajuan="kematian">Pengajuan Data Kematian</button>
                     </div>
-                    <div class="row" id="form">
-                        <p class="text-center">Pilih pengajuan, formulir akan tampil sesuai dengan pilihan</p>
-                    </div>
-                </form>
+                    <hr />
+                    <form id="form-pengajuan">
+                        @csrf
+                        <div class="row">
+                            <strong>Data Pelapor</strong>
+                            <input type="hidden" name="jenis_pengajuan" id="jenis_pengajuan" class="form-control">
+                            <div class="col-md-6 mb-3">
+                                <label for="nama_pelapor">Nama Pelapor</label>
+                                <input type="text" class="form-control" name="nama_pelapor" id="nama_pelapor" value="{{ session('nama') }}" placeholder="Masukan nama pelapor">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="nik_pelapor">nik Pelapor</label>
+                                <input type="text" class="form-control" name="nik_pelapor" id="nik_pelapor" placeholder="Masukan nik pelapor">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="alamat_pelapor">Alamat Pelapor</label>
+                                <textarea name="alamat_pelapor" id="alamat_pelapor" cols="5" rows="5" class="form-control">{{ session('alamat') }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row" id="form">
+                            <p class="text-center">Pilih pengajuan, formulir akan tampil sesuai dengan pilihan</p>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @push('js')
+<script src="/assets/sweetalert2/sweetalert2.all.min.js"></script>
+
     <script>
         $(document).on('click', '#kelahiran', function(e){
             $('#jenis_pengajuan').val($(this).data('jenis_pengajuan'));

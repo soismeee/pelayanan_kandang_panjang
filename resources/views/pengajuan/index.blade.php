@@ -82,7 +82,10 @@
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
                         let span = `<span class="badge bg-primary">Pengajuan</span>`;
-                        if (row.status == 'pengajuan'){
+                        if (row.status == 'proses'){
+                            span = `<span class="badge bg-warning">Proses</span>`
+                        }
+                        if (row.status == 'selesai'){
                             span = `<span class="badge bg-success">Selesai</span>`
                         }
                         return span;
@@ -92,14 +95,22 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return `
-                            <a href="/pengguna/`+row.id+`/edit" class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center">
+                        let tombol = `
+                            <a href="/pengajuan/`+row.pengajuan_id+`" class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center">
                                 <iconify-icon icon="majesticons:eye-line" class="icon text-xl"></iconify-icon>
                             </a>
-                            <a href="#" data-id="`+row.id+`" class="hapusdata w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
+                            <a href="#" data-id="`+row.pengajuan_id+`" class="hapusdata w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
                                 <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
                             </a>
-                        `
+                        `;
+                        if (row.status == "selesai") {
+                            tombol = `
+                                <a href="/Pengajuan/dokumen/`+row.dokumen+`" download="`+row.dokumen+`" data-id="`+row.pengajuan_id+`" class="download btn btn-sm btn-success">
+                                    Cetak
+                                </a>
+                            `
+                        }
+                        return tombol;
                     }
                 },
             ]

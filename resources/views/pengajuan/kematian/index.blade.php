@@ -16,7 +16,7 @@
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Nama</th>
-                        <th scope="col">Orang tua</th>
+                        <th scope="col">Data kematian</th>
                         <th scope="col">Tgl Pengajuan</th>
                         <th scope="col">Berkas</th>
                         <th scope="col">Status</th>
@@ -61,14 +61,15 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return row.data_kelahiran[0].nama_bayi
+                        return row.data_kematian[0].nama_alm
                     }
                 },
                 {
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return "Ayah : " + row.data_kelahiran[0].nama_ayah + "<br /> Ibu : " + row.data_kelahiran[0].nama_ibu
+                        return "Tgl : " + row.data_kematian[0].tanggal_kematian + "<br /> Tempat meninggal : " + row.data_kematian[0].tempat_kematian
+
                     }
                 },
                 {
@@ -90,8 +91,8 @@
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
                         let span = `<span class="badge bg-primary">Pengajuan</span>`;
-                        if (row.status == 'pengajuan'){
-                            span = `<span class="badge bg-success">Selesai</span>`
+                        if (row.status == 'proses'){
+                            span = `<span class="badge bg-warning">Proses</span>`
                         }
                         return span;
                     }
@@ -101,10 +102,10 @@
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
                         return `
-                            <a href="/pengguna/`+row.id+`/edit" class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center">
+                            <a href="/pengajuan_kematian/`+row.pengajuan_id+`" class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center">
                                 <iconify-icon icon="majesticons:eye-line" class="icon text-xl"></iconify-icon>
                             </a>
-                            <a href="#" data-id="`+row.id+`" class="hapusdata w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
+                            <a href="#" data-id="`+row.pengajuan_id+`" class="hapusdata w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
                                 <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
                             </a>
                         `

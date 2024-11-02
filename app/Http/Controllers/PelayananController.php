@@ -19,11 +19,11 @@ class PelayananController extends Controller
     }
 
     public function json(){
-        $pengguna = Pelanggan::where('user_id', auth()->user()->id)->first();
+        $pelanggan = Pelanggan::where('user_id', auth()->user()->id)->first();
 
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan'];
+        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKematian', 'dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan')->where('pengguna_id', $pengguna->pengguna_id);
+        $data = PengajuanLayanan::with(['dataKematian', 'dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen')->where('pelanggan_id', $pelanggan->pelanggan_id);
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {
@@ -132,9 +132,38 @@ class PelayananController extends Controller
         return response()->json(['statusCode' => 200, 'message' => 'Pengajuan berhasil disimpan']);
     }
 
+    public function show($id){
+        $pengajuan = PengajuanLayanan::with(['dataKelahiran', 'DataKematian'])->find($id);
+        return view('pengajuan.show', [
+            'title' => "Lihat data pengajuan",
+            'menu' => 'Pengajuan',
+            'submenu' => 'Pengajuan',
+            'data' => $pengajuan
+        ]);
+    }
+
     public function destroy($id){
         PengajuanLayanan::destroy($id);
         return response()->json(['statusCode' => 200,'message' => 'Pengajuan berhasil dihapus']);
+    }
+
+    public function updateInAdmin(Request $request, $id){
+        $request->validate([
+            'status' => 'required',
+        ]);
+        $pengajuan = PengajuanLayanan::find($id);
+        $pengajuan->status = $request->status;
+        $pengajuan->created_at = $request->created_at;
+
+        if ($request->hasFile('dokumen')) {
+            $file = $request->file('dokumen');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('Pengajuan/dokumen'), $filename);
+            $pengajuan->dokumen = $filename;
+        }
+        $pengajuan->update();
+
+        return redirect('/');
     }
 
     // master kelahiran
@@ -147,9 +176,9 @@ class PelayananController extends Controller
     }
 
     public function jsonKelahiran(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan'];
+        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan')->where('jenis_pengajuan', "kelahiran")->where('status', 'pengajuan');
+        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status')->where('jenis_pengajuan', "kelahiran")->where('status', '!=' ,'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {
@@ -179,6 +208,15 @@ class PelayananController extends Controller
         ]);
     }
 
+    public function showKelahiran($id){
+        return view('pengajuan.kelahiran.show', [
+            'title' => "Lihat data kelahiran",
+            'menu' => 'kelahiran',
+            'submenu' => 'Data kelahiran',
+            'data' => PengajuanLayanan::with(['dataKelahiran'])->find($id)
+        ]);
+    }
+
     public function riwayatKelahiran(){
         return view('pengajuan.kelahiran.riwayat', [
             'title' => 'Riwayat kelahiran',
@@ -188,9 +226,9 @@ class PelayananController extends Controller
     }
 
     public function jsonRiwayatKelahiran(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan'];
+        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan')->where('jenis_pengajuan', "kelahiran")->where('status', 'selesai');
+        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen')->where('jenis_pengajuan', "kelahiran")->where('status', 'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {
@@ -222,9 +260,9 @@ class PelayananController extends Controller
     }
 
     public function jsonKematian(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan'];
+        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKematian'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan')->where('jenis_pengajuan', "kematian")->where('status', 'pengajuan');
+        $data = PengajuanLayanan::with(['dataKematian'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status')->where('jenis_pengajuan', "kematian")->where('status', '!=' ,'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {
@@ -251,6 +289,15 @@ class PelayananController extends Controller
             'title' => 'Input kelahiran',
             'menu' => 'kelahiran',
             'menu' => 'Form kelahiran',
+        ]);
+    }
+
+    public function showKematian($id){
+        return view('pengajuan.kematian.show', [
+            'title' => "Lihat data kematian",
+            'menu' => 'kematian',
+            'submenu' => 'Data kematian',
+            'data' => PengajuanLayanan::with(['dataKematian'])->find($id)
         ]);
     }
 

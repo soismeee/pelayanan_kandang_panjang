@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('nik_pelapor', 16);
             $table->date('tanggal_pengajuan');
             $table->text('alamat_pelapor');
-            $table->enum('status', ['pengajuan', 'selesai']);
+            $table->enum('status', ['pengajuan', 'proses', 'selesai']);
+            $table->string('dokumen')->nullable();
             $table->timestamps();
 
             $table->foreign('pelanggan_id')->references('pelanggan_id')->on('pelanggans')->onDelete('cascade');

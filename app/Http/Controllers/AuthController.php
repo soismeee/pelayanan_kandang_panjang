@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pelanggan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            // return redirect()->intended('/home');
+            if (auth()->user()->role == "user") {
+                $pelanggan = Pelanggan::where('user_id', auth()->user()->id)->first();
+                session(['nama' => $pelanggan->nama]);
+                session(['alamat' => $pelanggan->alamat]);
+            }
+
             return response()->json(['message' => 'Berhasil login']);
         }
         // return back()->with('loginError', 'Login Failed!!!');

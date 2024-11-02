@@ -20,7 +20,7 @@
     <section class="auth bg-base d-flex flex-wrap">
         <div class="auth-left d-lg-block d-none">
             <div class="d-flex align-items-center flex-column h-100 justify-content-center">
-                <img src="/assets/images/auth/auth-img.png" alt="">
+                <img src="/assets/images/auth/background.jpg" alt="">
             </div>
         </div>
         <div class="auth-right py-32 px-24 d-flex flex-column justify-content-center">
@@ -30,8 +30,8 @@
                         {{-- <img src="/assets/images/logo.png" alt=""> --}}
                         <strong>Pelayanan Kandang Panjang</strong>
                     </a>
-                    <h4 class="mb-12">Sign Up to your Account</h4>
-                    <p class="mb-32 text-secondary-light text-lg">Welcome back! please enter your detail</p>
+                    <h4 class="mb-12">Registrasi akun anda</h4>
+                    <p class="mb-32 text-secondary-light text-lg">Selamat datang, buat akunmu sendiri</p>
                 </div>
                 <form id="form-register">
                     @csrf
@@ -57,7 +57,7 @@
                             </div>
                             <span class="toggle-password ri-eye-line cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light" data-toggle="#your-password"></span>
                         </div>
-                        <span class="mt-12 text-sm text-secondary-light">Password minimal 8 karakter</span>
+                        <span class="mt-12 text-sm text-secondary-light">Password minimal 5 karakter</span>
                     </div>
 
                     <button type="submit" id="tombol" class="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"> Registrasi</button>
