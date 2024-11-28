@@ -50,4 +50,9 @@ Route::get('/riwayat_kematian', [PelayananController::class, 'riwayatKematian'])
 Route::post('/pengajuanProses/{id}', [PelayananController::class, 'updateInAdmin'])->middleware('auth');
 
 Route::get('/laporan_lhr', [LaporanController::class, 'indexKelahiran'])->middleware('auth');
+Route::post('/lihatlaporankelahiran', [LaporanController::class, 'cekKelahiran'])->middleware('auth');
+Route::post('/cetakkelahiran', [LaporanController::class, 'cetakKelahiran'])->middleware('auth');
+
 Route::get('/laporan_mt', [LaporanController::class, 'indexKematian'])->middleware('auth');
+Route::post('/lihatlaporankematian', [LaporanController::class, 'cekKematian'])->middleware('auth');
+Route::post('/cetakkematian', [LaporanController::class, 'cetakKematian'])->middleware('auth');
