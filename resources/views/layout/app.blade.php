@@ -32,10 +32,6 @@
                         <button type="button" class="sidebar-mobile-toggle">
                             <iconify-icon icon="heroicons:bars-3-solid" class="icon"></iconify-icon>
                         </button>
-                        <form class="navbar-search">
-                            <input type="text" name="search" placeholder="Search">
-                            <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
-                        </form>
                     </div>
                 </div>
                 <div class="col-auto">
@@ -55,7 +51,7 @@
                                 </div>
                                 <ul class="to-top-list">
                                     <li>
-                                        <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3" href="/">
+                                        <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3" href="/profil">
                                             <iconify-icon icon="solar:user-linear" class="icon text-xl"></iconify-icon> Profil saya
                                         </a>
                                     </li>

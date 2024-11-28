@@ -16,7 +16,9 @@ Route::post('/regist', [AuthController::class, 'store']);
 
 Route::get('/', [DashbaordController::class, 'index'])->middleware('auth');
 Route::get('/home', [DashbaordController::class, 'index'])->name('home')->name('auth');
+Route::get('/profil', [DashbaordController::class, 'profil'])->name('home')->name('auth');
 Route::post('/storePelanggan', [DashbaordController::class, 'store'])->middleware('auth');
+Route::post('/updateProfil/{id}', [DashbaordController::class, 'update'])->middleware('auth');
 
 Route::resource('/pengguna', PenggunaController::class)->middleware('auth');
 Route::post('/jsonPengguna', [PenggunaController::class, 'json'])->middleware('auth');

@@ -11,13 +11,13 @@
                 <form action="/cetakkelahiran" method="POST">
                     @csrf
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-12">
                             <input type="date" class="form-control" id="tgl_awal" name="tgl_awal">
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-12 mt-3">
                             <input type="date" class="form-control" id="tgl_akhir" name="tgl_akhir">
                         </div>
-                        <div class="col-4">
+                        <div class="col-lg-4 col-md-12 mt-3">
                             <a href="#" class="btn btn-sm btn-primary" id="lihat">Lihat data</a>
                             <button type="submit" class="btn btn-sm btn-success">Cetak</button>
                         </div>
@@ -25,7 +25,7 @@
                 </form>
                 <br />
                 <label>Data kelahiran</label>
-                <div id="data-kelahiran">
+                <div id="data-kelahiran" class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>

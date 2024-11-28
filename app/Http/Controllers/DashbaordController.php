@@ -6,6 +6,8 @@ use App\Models\Pelanggan;
 use App\Models\PengajuanLayanan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class DashbaordController extends Controller
 {
@@ -53,5 +55,33 @@ class DashbaordController extends Controller
 
         // return $pelanggan;
         return response()->json(['statusCode' => 200, 'message' => "Data berhasil disimpan"]);
+    }
+
+    public function update(Request $request, $id){
+        $request->validate([
+            'nama' => 'required',
+            'email' => 'required',
+        ]);
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password !== null) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->update();
+
+        Auth::logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect('/');
+    }
+
+    public function profil(){
+        return view('home.profil', [
+            'title' => 'Profil',
+            'menu' => 'Profil',
+            'submenu' => 'Profil',
+        ]);
     }
 }
