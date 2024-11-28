@@ -7,7 +7,7 @@
 @section('container')
 <div class="card basic-data-table">
     <div class="card-header">
-        <h5 class="card-title mb-0">Data Pengajuan Kematian</h5>
+        <h5 class="card-title mb-0">Data Riwayat Kematian</h5>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -68,8 +68,8 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return "Tgl : " + row.data_kematian[0].tanggal_kematian + "<br /> Tempat meninggal : " + row.data_kematian[0].tempat_kematian
-
+                        return "Tgl : " + row.data_kematian[0].tanggal_kematian +
+                        "<br /> Tempat meninggal : " + row.data_kematian[0].tempat_kematian
                     }
                 },
                 {
@@ -83,7 +83,7 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return `<a href="#" class="btn btn-sm btn-primary">Lihat</a>`
+                        return `<a href="/berkaskematian/`+row.pengajuan_id+`" class="btn btn-sm btn-primary">Lihat</a>`
                     }
                 },
                 {
@@ -102,11 +102,8 @@
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
                         return `
-                            <a href="/pengajuan_kelahiran/`+row.pengajuan_id+`" class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                <iconify-icon icon="majesticons:eye-line" class="icon text-xl"></iconify-icon>
-                            </a>
                             <a href="/Pengajuan/dokumen/`+row.dokumen+`" download="`+row.dokumen+`" data-id="`+row.pengajuan_id+`" class="download btn btn-sm btn-primary">
-                                Cetak
+                                Downlaod berkas
                             </a>
                         `
                     }

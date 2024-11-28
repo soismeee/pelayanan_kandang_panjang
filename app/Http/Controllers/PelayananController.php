@@ -216,6 +216,15 @@ class PelayananController extends Controller
             'data' => PengajuanLayanan::with(['dataKelahiran'])->find($id)
         ]);
     }
+    
+    public function showBerkasKelahiran($id){
+        return view('pengajuan.kelahiran.berkas', [
+            'title' => "Lihat berkas kelahiran",
+            'menu' => 'kelahiran',
+            'submenu' => 'Data kelahiran',
+            'data' => PengajuanLayanan::with(['dataKelahiran'])->find($id)
+        ]);
+    }
 
     public function riwayatKelahiran(){
         return view('pengajuan.kelahiran.riwayat', [
@@ -250,6 +259,7 @@ class PelayananController extends Controller
         ]);
     }
 
+    ##############################################################################################
     // master kematian
     public function indexKematian(){
         return view('pengajuan.kematian.index', [
@@ -300,19 +310,28 @@ class PelayananController extends Controller
             'data' => PengajuanLayanan::with(['dataKematian'])->find($id)
         ]);
     }
+    
+    public function showBerkasKematian($id){
+        return view('pengajuan.kematian.berkas', [
+            'title' => "Lihat berkas kematian",
+            'menu' => 'kematian',
+            'submenu' => 'Data kematian',
+            'data' => PengajuanLayanan::with(['dataKematian'])->find($id)
+        ]);
+    }
 
     public function riwayatKematian(){
         return view('pengajuan.kematian.riwayat', [
-            'title' => 'Riwayat kelahiran',
-            'menu' => 'kelahiran',
-            'menu' => 'Riwayat kelahiran',
+            'title' => 'Riwayat kematian',
+            'menu' => 'kematian',
+            'menu' => 'Riwayat kematian',
         ]);
     }
 
     public function jsonRiwayatKematian(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan'];
+        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan')->where('jenis_pengajuan', "kematian")->where('status', 'selesai');
+        $data = PengajuanLayanan::with(['dataKematian'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen')->where('jenis_pengajuan', "kematian")->where('status', 'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {

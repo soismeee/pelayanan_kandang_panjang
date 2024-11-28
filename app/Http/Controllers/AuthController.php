@@ -52,7 +52,7 @@ class AuthController extends Controller
         $vaslidatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|max:255'
+            'password' => 'required|min:3|max:255'
         ]);
 
         $user = new User();
@@ -63,7 +63,8 @@ class AuthController extends Controller
         $user->role = "user";
         $user->status = 'inactive';
         $user->save();
-        return redirect('login')->with('success', 'Registrasi berhasil!! silahkan login');
+        return response()->json(['statusCode' => 200, 'message' => 'Registrasi berhasil dilakukan']);
+        // return redirect('login')->with('success', 'Registrasi berhasil!! silahkan login');
     }
 
     public function logout()

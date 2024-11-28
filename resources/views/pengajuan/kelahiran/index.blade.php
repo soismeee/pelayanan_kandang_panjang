@@ -82,7 +82,7 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return `<a href="#" class="btn btn-sm btn-primary">Lihat</a>`
+                        return `<a href="/berkaskelahiran/`+row.pengajuan_id+`" class="btn btn-sm btn-primary">Lihat</a>`
                     }
                 },
                 {

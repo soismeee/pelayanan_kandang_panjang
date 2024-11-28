@@ -95,7 +95,7 @@
                 data: $('#form-register').serialize(),
                 dataType: "json",
                 success: function(response) {
-                    window.location.href = "{{ url('/login') }}";
+                    window.location.href = '/login'
                 },
                 error: function(err) {
                     $('#tombol').prop('disabled', false);

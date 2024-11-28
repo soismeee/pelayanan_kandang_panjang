@@ -33,6 +33,7 @@ Route::post('/pengajuanDel/{id}', [PelayananController::class, 'destroy'])->midd
 
 Route::get('/create_pengajuan_lhr', [PelayananController::class, 'createKelahiran'])->middleware('auth');
 Route::get('/pengajuan_kelahiran', [PelayananController::class, 'indexKelahiran'])->middleware('auth');
+Route::get('/berkaskelahiran/{id}', [PelayananController::class, 'showBerkasKelahiran'])->middleware('auth');
 Route::get('/pengajuan_kelahiran/{id}', [PelayananController::class, 'showKelahiran'])->middleware('auth');
 Route::get('/riwayat_kelahiran', [PelayananController::class, 'riwayatKelahiran'])->middleware('auth');
 Route::post('/jsonKelahiran', [PelayananController::class, 'jsonKelahiran'])->middleware('auth');
@@ -40,6 +41,7 @@ Route::post('/jsonRiwayatKelahiran', [PelayananController::class, 'jsonRiwayatKe
 
 Route::get('/create_pengajuan_mt', [PelayananController::class, 'createKematian'])->middleware('auth');
 Route::get('/pengajuan_kematian', [PelayananController::class, 'indexKematian'])->middleware('auth');
+Route::get('/berkaskematian/{id}', [PelayananController::class, 'showBerkasKematian'])->middleware('auth');
 Route::get('/pengajuan_kematian/{id}', [PelayananController::class, 'showKematian'])->middleware('auth');
 Route::post('/jsonKematian', [PelayananController::class, 'jsonKematian'])->middleware('auth');
 Route::post('/jsonRiwayatKematian', [PelayananController::class, 'jsonRiwayatKematian'])->middleware('auth');

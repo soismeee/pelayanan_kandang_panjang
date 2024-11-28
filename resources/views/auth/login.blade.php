@@ -94,9 +94,7 @@
                     $('#tombol').prop('disabled', false);
                     $('#tombol').html('Masuk');
                     let error = err.responseJSON;
-                    $.each(error.errors, function(key, value) {
-                        $('#' + key).addClass('is-invalid');
-                    });
+                    alert('Tidak bisa login, silahkan coba lagi')
                 }
             });
         });
