@@ -8,6 +8,7 @@
 <div class="card basic-data-table">
     <div class="card-header">
         <h5 class="card-title mb-0">Data Pengajuan Kelahiran</h5>
+        <span>Catatan : Segera buat dokumen surat jika status pengajuan sudah di proses</span>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -36,6 +37,15 @@
     <script src="/assets/js/lib/dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js"></script>
     <script>
+        function formatTanggal(tanggal) {
+            if (!tanggal) return "Belum tersedia"; // Jika tanggal null atau undefined
+            let date = new Date(tanggal); // Konversi string tanggal ke objek Date
+            let day = String(date.getDate()).padStart(2, '0'); // Hari dengan 2 digit
+            let month = String(date.getMonth() + 1).padStart(2, '0'); // Bulan dengan 2 digit
+            let year = date.getFullYear(); // Tahun
+            return `${day}-${month}-${year}`; // Format dd-mm-yyyy
+        }
+
         const table = $('#dataTable').DataTable({          
             "lengthMenu": [[5, 10, 25, 50, 100, -1],[5, 10, 25, 50, 100, 'All']],
             "pageLength": 10, 
@@ -61,7 +71,7 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return row.data_kelahiran[0].nama_bayi
+                        return row.data_kelahiran[0].nama_bayi + "<br />" + row.data_kelahiran[0].tempat_lahir + ", " + formatTanggal(row.data_kelahiran[0].tanggal_lahir)
                     }
                 },
                 {
@@ -75,7 +85,7 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return row.tanggal_pengajuan
+                        return formatTanggal(row.tanggal_pengajuan)
                     }
                 },
                 {

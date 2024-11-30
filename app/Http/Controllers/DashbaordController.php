@@ -33,7 +33,8 @@ class DashbaordController extends Controller
             return view('home.index', [
                 'title' => 'Dashboard',
                 'data' => $data,
-                'pengajuan' => $pengajuan->get()
+                'pengajuan' => $pengajuan->get(),
+                'user' => User::where('verified', "0")->get(),
             ]);
         }
     }
@@ -53,7 +54,6 @@ class DashbaordController extends Controller
         $pelanggan->no_telepon = $request->no_telepon;
         $pelanggan->save();
 
-        // return $pelanggan;
         return response()->json(['statusCode' => 200, 'message' => "Data berhasil disimpan"]);
     }
 

@@ -26,7 +26,6 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        // dd($request);
         $credentials = $request->validate([
             'email' => 'required',
             'password' => 'required'
@@ -42,13 +41,11 @@ class AuthController extends Controller
 
             return response()->json(['message' => 'Berhasil login']);
         }
-        // return back()->with('loginError', 'Login Failed!!!');
         return response()->json(['message' => 'Gagal melakukan authentikasi'], 404);
     }
 
     public function store(Request $request)
     {
-        // return request()->all();
         $vaslidatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
@@ -64,7 +61,6 @@ class AuthController extends Controller
         $user->status = 'inactive';
         $user->save();
         return response()->json(['statusCode' => 200, 'message' => 'Registrasi berhasil dilakukan']);
-        // return redirect('login')->with('success', 'Registrasi berhasil!! silahkan login');
     }
 
     public function logout()

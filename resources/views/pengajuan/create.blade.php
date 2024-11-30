@@ -129,7 +129,7 @@
                     <input type="date" class="form-control" name="tanggal_kematian" id="tanggal_kematian" placeholder="Tanggal kematian">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="tempat_kematian">Tempat lahir</label>
+                    <label for="tempat_kematian">Tempat kematian</label>
                     <input type="text" name="tempat_kematian" id="tempat_kematian" class="form-control" placeholder="Masukan tempat kematian">
                 </div>
                 <div class="col-md-4">

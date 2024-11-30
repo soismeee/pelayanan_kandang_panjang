@@ -104,7 +104,7 @@
                     Swal.fire({
                         icon: "success",
                         title: "Selamat!",
-                        text: "Data dpa berhasil disimpan.",
+                        text: "Data pengguna berhasil disimpan.",
                     });
                     window.location.reload();
                 },

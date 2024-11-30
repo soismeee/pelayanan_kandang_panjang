@@ -79,6 +79,7 @@ class PenggunaController extends Controller
         try {
             $user = User::findOrFail($id);
             $user->status = $request->status;
+            $user->verified = '1';
             $user->update();
             return response()->json(['status' => 200, 'message' => "Status pengguna berhasil diubah"]);
         } catch (\Throwable $th) {

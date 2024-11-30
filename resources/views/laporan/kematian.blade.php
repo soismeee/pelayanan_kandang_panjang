@@ -11,7 +11,7 @@
                 <form action="/cetakkematian" method="POST">
                     @csrf
                     <div class="row">
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-4 col-md-12 mt-3">
                             <input type="date" class="form-control" id="tgl_awal" name="tgl_awal">
                         </div>
                         <div class="col-lg-4 col-md-12 mt-3">
@@ -34,6 +34,7 @@
                                 <td>Jenis Kelamin</td>
                                 <td>Tempat kematian</td>
                                 <td>Tgl kematian</td>
+                                <td>Status</td>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -49,12 +50,17 @@
 <script>
     $(document).ready(function(){
         loading();
+        $('#loading').hide();
+        $('#empty').show();
     });
 
     function loading(){
         $('#data-kematian table tbody').append(`
             <tr>
-                <td colspan="7" class="text-center" id="loading">Tidak ada data</td>
+                <td colspan="6" class="text-center" id="loading">Loading...</td>
+            </tr>
+            <tr>
+                <td colspan="6" class="text-center" style="display: none" id="empty">Tidak ada data</td>
             </tr>
         `);
     }
@@ -71,14 +77,16 @@
 
     $(document).on('click', '#lihat', function(e){
         e.preventDefault();
+        $('#data-kematian table tbody').empty(); // Menghapus isi tabel
+        loading(); // Membuat loading
         $.ajax({
             url: "{{ url('lihatlaporankematian') }}",
             type: "POST",
             data: { 'tgl_awal' : $('#tgl_awal').val(), 'tgl_akhir' : $('#tgl_akhir').val(), '_token' : "{{ csrf_token() }}" },
             dataType: 'json',
             success: function(response){
-                let data = response.data;
                 $('#loading').hide();
+                let data = response.data;
                 data.forEach((params, index) => {
                     let gender = "Laki-laki";
                     if (params.data_kematian[0].jenis_kelamin == "P") {
@@ -91,6 +99,7 @@
                             '<td>'+gender+'</td>'+
                             '<td>'+params.data_kematian[0].tempat_kematian+'</td>'+
                             '<td>'+formatTanggal(params.data_kematian[0].tanggal_kematian)+'</td>'+
+                            '<td>'+params.status+'</td>'+
                         '</tr>'
                     );
                 })

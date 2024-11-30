@@ -54,12 +54,40 @@ class PelayananController extends Controller
     }
 
     public function store(Request $request){
-        $request->validate([
-            'nama_pelapor' => 'required',
-            'nik_pelapor' => 'required',
-            'alamat_pelapor' => 'required',
-            'jenis_pengajuan' => 'required',
-        ]);
+        
+        if ($request->jenis_pengajuan == "kelahiran") {
+            $request->validate([
+                'nama_pelapor' => 'required',
+                'nik_pelapor' => 'required',
+                'alamat_pelapor' => 'required',
+                'jenis_pengajuan' => 'required',
+                'nama_bayi' => 'required',
+                'jenis_kelamin' => 'required',
+                'tanggal_lahir' => 'required',
+                'tempat_lahir' => 'required',
+                'nama_ayah' => 'required',
+                'nik_ayah' => 'required',
+                'nama_ibu' => 'required',
+                'nik_ibu' => 'required',
+                'ktp_ayah' => 'required|mimes:jpeg,jpg,png|max:2048',
+                'ktp_ibu' => 'required|mimes:jpeg,jpg,png|max:2048',
+            ]);
+        } else {
+            $request->validate([
+                'nama_pelapor' => 'required',
+                'nik_pelapor' => 'required',
+                'alamat_pelapor' => 'required',
+                'jenis_pengajuan' => 'required',
+                'nama_alm' => 'required',
+                'jenis_kelamin' => 'required',
+                'tanggal_kematian' => 'required',
+                'tempat_kematian' => 'required',
+                'berkas_ktp' => 'required|mimes:jpeg,jpg,png|max:2048',
+                'berkas_akta' => 'required|mimes:jpeg,jpg,png|max:2048',
+                'berkas_kk' => 'required|mimes:jpeg,jpg,png|max:2048',
+            ]);
+        }
+        
 
         $pelanggan = Pelanggan::where('user_id', auth()->user()->id)->first();
         
@@ -235,9 +263,9 @@ class PelayananController extends Controller
     }
 
     public function jsonRiwayatKelahiran(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen'];
+        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen', 'updated_at'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen')->where('jenis_pengajuan', "kelahiran")->where('status', 'selesai');
+        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen', 'updated_at')->where('jenis_pengajuan', "kelahiran")->where('status', 'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {
@@ -329,9 +357,9 @@ class PelayananController extends Controller
     }
 
     public function jsonRiwayatKematian(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen'];
+        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen', 'updated_at'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKematian'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen')->where('jenis_pengajuan', "kematian")->where('status', 'selesai');
+        $data = PengajuanLayanan::with(['dataKematian'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen', 'updated_at')->where('jenis_pengajuan', "kematian")->where('status', 'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {

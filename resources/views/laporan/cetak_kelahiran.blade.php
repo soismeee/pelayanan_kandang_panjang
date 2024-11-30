@@ -37,6 +37,7 @@
             <td>Jenis Kelamin</td>
             <td>Ayah</td>
             <td>Ibu</td>
+            <td>Status Pengajuan</td>
         </tr>
         <tbody>
             @foreach ($data as $item)
@@ -48,6 +49,7 @@
                     <td>{{ $item->dataKelahiran[0]->jenis_kelamin == "L" ? "Laki - laki" : "Perempuan" }}</td>
                     <td>{{ $item->dataKelahiran[0]->nama_ayah }}</td>
                     <td>{{ $item->dataKelahiran[0]->nama_ibu }}</td>
+                    <td>{{ $item->status }}</td>
                 </tr>
             @endforeach
         </tbody>

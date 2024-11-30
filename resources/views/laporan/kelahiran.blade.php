@@ -11,7 +11,7 @@
                 <form action="/cetakkelahiran" method="POST">
                     @csrf
                     <div class="row">
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-4 col-md-12 mt-3">
                             <input type="date" class="form-control" id="tgl_awal" name="tgl_awal">
                         </div>
                         <div class="col-lg-4 col-md-12 mt-3">
@@ -36,6 +36,7 @@
                                 <td>Jenis Kelamin</td>
                                 <td>Ayah</td>
                                 <td>Ibu</td>
+                                <td>Status</td>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -51,26 +52,42 @@
 <script>
     $(document).ready(function(){
         loading();
+        $('#loading').hide();
+        $('#empty').show();
     });
+
+    function formatTanggal(tanggal) {
+        if (!tanggal) return "Belum tersedia"; // Jika tanggal null atau undefined
+        let date = new Date(tanggal); // Konversi string tanggal ke objek Date
+        let day = String(date.getDate()).padStart(2, '0'); // Hari dengan 2 digit
+        let month = String(date.getMonth() + 1).padStart(2, '0'); // Bulan dengan 2 digit
+        let year = date.getFullYear(); // Tahun
+        return `${day}-${month}-${year}`; // Format dd-mm-yyyy
+    }
 
     function loading(){
         $('#data-kelahiran table tbody').append(`
             <tr>
-                <td colspan="7" class="text-center" id="loading">Tidak ada data</td>
+                <td colspan="8" class="text-center" id="loading">Loading...</td>
+            </tr>
+            <tr>
+                <td colspan="8" class="text-center" style="display: none" id="empty">Tidak ada data</td>
             </tr>
         `);
     }
 
     $(document).on('click', '#lihat', function(e){
         e.preventDefault();
+        $('#data-kelahiran table tbody').empty(); // Menghapus isi tabel
+        loading(); // Membuat loading
         $.ajax({
             url: "{{ url('lihatlaporankelahiran') }}",
             type: "POST",
             data: { 'tgl_awal' : $('#tgl_awal').val(), 'tgl_akhir' : $('#tgl_akhir').val(), '_token' : "{{ csrf_token() }}" },
             dataType: 'json',
             success: function(response){
-                let data = response.data;
                 $('#loading').hide();
+                let data = response.data;
                 data.forEach((params, index) => {
                     let gender = "Laki-laki";
                     if (params.data_kelahiran[0].jenis_kelamin == "P") {
@@ -85,6 +102,7 @@
                             '<td>'+gender+'</td>'+
                             '<td>'+params.data_kelahiran[0].nama_ayah+'</td>'+
                             '<td>'+params.data_kelahiran[0].nama_ibu+'</td>'+
+                            '<td>'+params.status+'</td>'+
                         '</tr>'
                     );
                 })

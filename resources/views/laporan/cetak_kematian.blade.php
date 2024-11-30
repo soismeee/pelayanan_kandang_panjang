@@ -35,6 +35,7 @@
             <td>Jenis Kelamin</td>
             <td>Tempat kematian</td>
             <td>Tgl kematian</td>
+            <td>Status Pengajuan</td>
         </tr>
         <tbody>
             @foreach ($data as $item)
@@ -44,6 +45,7 @@
                     <td>{{ $item->dataKematian[0]->jenis_kelamin == "L" ? "Laki - laki" : "Perempuan" }}</td>
                     <td>{{ $item->dataKematian[0]->tempat_kematian }}</td>
                     <td>{{ date('d-m-Y', strtotime($item->dataKematian[0]->tanggal_kematian)) }}</td>
+                    <td>{{ $item->status }}</td>
                 </tr>
             @endforeach
         </tbody>

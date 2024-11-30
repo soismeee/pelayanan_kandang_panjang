@@ -37,7 +37,7 @@
 
                         <div class="w-64-px h-64-px radius-16 bg-base-50 d-flex justify-content-center align-items-center me-20">
                             <span class="mb-0 w-40-px h-40-px bg-purple flex-shrink-0 text-white d-flex justify-content-center align-items-center radius-8 h6 mb-0">
-                                <iconify-icon icon="solar:wallet-bold" class="text-white text-2xl mb-0"></iconify-icon>
+                                <iconify-icon icon="fa6-solid:file" class="text-white text-2xl mb-0"></iconify-icon>
                             </span>
                         </div>
 
@@ -61,7 +61,7 @@
 
                         <div class="w-64-px h-64-px radius-16 bg-base-50 d-flex justify-content-center align-items-center me-20">
                             <span class="mb-0 w-40-px h-40-px bg-red flex-shrink-0 text-white d-flex justify-content-center align-items-center radius-8 h6 mb-0">
-                                <iconify-icon icon="fa6-solid:file-invoice-dollar" class="text-white text-2xl mb-0"></iconify-icon>
+                                <iconify-icon icon="fa6-solid:file" class="text-white text-2xl mb-0"></iconify-icon>
                             </span>
                         </div>
 
@@ -85,7 +85,7 @@
 
                         <div class="w-64-px h-64-px radius-16 bg-base-50 d-flex justify-content-center align-items-center me-20">
                             <span class="mb-0 w-40-px h-40-px bg-success-main flex-shrink-0 text-white d-flex justify-content-center align-items-center radius-8 h6 mb-0">
-                                <iconify-icon icon="streamline:bag-dollar-solid" class="icon"></iconify-icon>
+                                <iconify-icon icon="fa6-solid:file" class="icon"></iconify-icon>
                             </span>
                         </div>
 
@@ -119,23 +119,64 @@
                     <img src="assets/images/pengajuan/kematian.png" class="h-100 w-100 object-fit-cover" alt="">
                 </div>
                 <div class="card-body p-16 flex-grow-1">
-                    <h5 class="card-title text-lg text-primary-light mb-6">Pengajuan data kelahiran</h5>
+                    <h5 class="card-title text-lg text-primary-light mb-6">Pengajuan data kematian</h5>
                     <p class="card-text text-neutral-600 mb-16">Ajukan data kematian orang kesayangan anda dengan mengisi formulir pengajuan seperti nama, jenis kelamin, tanggal kematian, tempat kematian, data diri dan Berkas lain.</p>
                 </div>
             </div>
         </div>
     @endcan
 
-    <!-- Revenue Statistics Start -->
+    @can('admin')
+            <!-- Revenue Statistics Start -->
     <div class="col-xxl-12">
         <div class="card h-100 radius-8 border-0">
             <div class="card-body p-24">
-                <label class="mb-3">Daftar pengajuan yang belum di proses</label>
+                <label class="mb-3"><strong>Daftar pengguna baru</strong> <br/>
+                Aktifkan user agar dapat melakukan pengajuan</label>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="tabel-pengajuan">
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Tanggal registrasi</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($user as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->name }}</td>    
+                                    <td>{{ $item->email }}</td>    
+                                    <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>    
+                                    <td>{{ $item->status }}</td>    
+                                </tr>                                
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada pengguna baru</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Revenue Statistics End -->
+    @endcan
+
+    <!-- Pengajuan Start -->
+    <div class="col-xxl-12">
+        <div class="card h-100 radius-8 border-0">
+            <div class="card-body p-24">
+                <label class="mb-3"><strong>Daftar pengajuan yang belum di proses</strong></label>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tabel-pengajuan">
+                        <thead>
+                            <tr>
+                                <th width="5%">No</th>
                                 <th>Nama</th>
                                 <th>Jenis Pengajuan</th>
                                 <th>Tanggal</th>
@@ -146,7 +187,7 @@
                             @forelse ($pengajuan as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->nama_pelapor }}</td>    
+                                    <td>{{ $item->jenis_pengajuan == "kelahiran" ? $item->dataKelahiran[0]->nama_bayi : $item->dataKematian[0]->nama_alm }}</td>    
                                     <td>{{ $item->jenis_pengajuan }}</td>    
                                     <td>{{ date('d-m-Y', strtotime($item->tanggal_pengajuan)) }}</td>    
                                     <td>{{ $item->status }}</td>    
@@ -159,11 +200,10 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     </div>
-    <!-- Revenue Statistics End -->
+    <!-- pengajuan End -->
 
 </div>
 
