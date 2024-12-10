@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pengajuan_layanans', function (Blueprint $table) {
             $table->uuid('pengajuan_id')->primary();
-            $table->uuid('pelanggan_id')->index();
+            $table->uuid('pengguna_id')->index();
             $table->enum('jenis_pengajuan', ['kelahiran', 'kematian']);
             $table->string('nama_pelapor', 100);
             $table->string('nik_pelapor', 16);
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('dokumen')->nullable();
             $table->timestamps();
 
-            $table->foreign('pelanggan_id')->references('pelanggan_id')->on('pelanggans')->onDelete('cascade');
+            $table->foreign('pengguna_id')->references('pengguna_id')->on('penggunas')->onDelete('cascade');
         });
     }
 

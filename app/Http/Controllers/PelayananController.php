@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DataKelahiran;
 use App\Models\DataKematian;
-use App\Models\Pelanggan;
+use App\Models\Pengguna;
 use App\Models\PengajuanLayanan;
 use Illuminate\Http\Request;
 
@@ -19,11 +19,11 @@ class PelayananController extends Controller
     }
 
     public function json(){
-        $pelanggan = Pelanggan::where('user_id', auth()->user()->id)->first();
+        $pengguna = Pengguna::where('user_id', auth()->user()->id)->first();
 
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen'];
+        $columns = ['pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKematian', 'dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen')->where('pelanggan_id', $pelanggan->pelanggan_id);
+        $data = PengajuanLayanan::with(['dataKematian', 'dataKelahiran'])->select('pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen')->where('pengguna_id', $pengguna->pengguna_id);
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {
@@ -65,11 +65,8 @@ class PelayananController extends Controller
                 'jenis_kelamin' => 'required',
                 'tanggal_lahir' => 'required',
                 'tempat_lahir' => 'required',
-                'nama_ayah' => 'required',
-                'nik_ayah' => 'required',
                 'nama_ibu' => 'required',
                 'nik_ibu' => 'required',
-                'ktp_ayah' => 'required|mimes:jpeg,jpg,png|max:2048',
                 'ktp_ibu' => 'required|mimes:jpeg,jpg,png|max:2048',
             ]);
         } else {
@@ -89,11 +86,11 @@ class PelayananController extends Controller
         }
         
 
-        $pelanggan = Pelanggan::where('user_id', auth()->user()->id)->first();
+        $pengguna = Pengguna::where('user_id', auth()->user()->id)->first();
         
         $pengajuan = new PengajuanLayanan();
         $pengajuan->pengajuan_id = intval((microtime(true) * 10000));
-        $pengajuan->pelanggan_id = $pelanggan->pelanggan_id;
+        $pengajuan->pengguna_id = $pengguna->pengguna_id;
         $pengajuan->nama_pelapor = $request->nama_pelapor;
         $pengajuan->nik_pelapor = $request->nik_pelapor;
         $pengajuan->tanggal_pengajuan = date('Y-m-d');
@@ -114,20 +111,22 @@ class PelayananController extends Controller
             $kelahiran->nik_ibu = $request->nik_ibu;
 
             $ktp_ayah = $request->file('ktp_ayah');
-            $filename = $pengajuan->pengajuan_id . "_" .time() ."ktp_ayah". '.' . $ktp_ayah->getClientOriginalExtension();
-
-            $ktp_ayah->move(public_path('Pengajuan/kelahiran'), $filename);
-            $kelahiran->ktp_ayah = $filename;
+            if ($ktp_ayah !== null) {
+                $filename_ayah = $pengajuan->pengajuan_id . "_" .time() ."ktp_ayah". '.' . $ktp_ayah->getClientOriginalExtension();
+    
+                $ktp_ayah->move(public_path('Pengajuan/kelahiran'), $filename_ayah);
+                $kelahiran->ktp_ayah = $filename_ayah;
+            }
 
             $ktp_ibu = $request->file('ktp_ibu');
-            $filename = $pengajuan->pengajuan_id . "_" .time() . "ktp_ibu" .'.' . $ktp_ibu->getClientOriginalExtension();
-            $ktp_ibu->move(public_path('Pengajuan/kelahiran'), $filename);
-            $kelahiran->ktp_ibu = $filename;
+            $filename_ibu = $pengajuan->pengajuan_id . "_" .time() . "ktp_ibu" .'.' . $ktp_ibu->getClientOriginalExtension();
+            $ktp_ibu->move(public_path('Pengajuan/kelahiran'), $filename_ibu);
+            $kelahiran->ktp_ibu = $filename_ibu;
 
             $kk = $request->file('berkas_kk');
-            $filename = $pengajuan->pengajuan_id . "_" .time(). "berkas_kk". '.' . $kk->getClientOriginalExtension();
-            $kk->move(public_path('Pengajuan/kelahiran'), $filename);
-            $kelahiran->berkas_kk = $filename;
+            $filename_kk = $pengajuan->pengajuan_id . "_" .time(). "berkas_kk". '.' . $kk->getClientOriginalExtension();
+            $kk->move(public_path('Pengajuan/kelahiran'), $filename_kk);
+            $kelahiran->berkas_kk = $filename_kk;
             $kelahiran->save();
         }
 
@@ -204,9 +203,9 @@ class PelayananController extends Controller
     }
 
     public function jsonKelahiran(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status'];
+        $columns = ['pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status')->where('jenis_pengajuan', "kelahiran")->where('status', '!=' ,'selesai');
+        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status')->where('jenis_pengajuan', "kelahiran")->where('status', '!=' ,'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {
@@ -263,9 +262,9 @@ class PelayananController extends Controller
     }
 
     public function jsonRiwayatKelahiran(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen', 'updated_at'];
+        $columns = ['pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen', 'updated_at'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen', 'updated_at')->where('jenis_pengajuan', "kelahiran")->where('status', 'selesai');
+        $data = PengajuanLayanan::with(['dataKelahiran'])->select('pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status', 'dokumen', 'updated_at')->where('jenis_pengajuan', "kelahiran")->where('status', 'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {
@@ -298,9 +297,9 @@ class PelayananController extends Controller
     }
 
     public function jsonKematian(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status'];
+        $columns = ['pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKematian'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status')->where('jenis_pengajuan', "kematian")->where('status', '!=' ,'selesai');
+        $data = PengajuanLayanan::with(['dataKematian'])->select('pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'status')->where('jenis_pengajuan', "kematian")->where('status', '!=' ,'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {
@@ -357,9 +356,9 @@ class PelayananController extends Controller
     }
 
     public function jsonRiwayatKematian(){
-        $columns = ['pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen', 'updated_at'];
+        $columns = ['pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen', 'updated_at'];
         $orderBy = $columns[request()->input("order.0.column")];
-        $data = PengajuanLayanan::with(['dataKematian'])->select('pengajuan_id', 'pelanggan_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen', 'updated_at')->where('jenis_pengajuan', "kematian")->where('status', 'selesai');
+        $data = PengajuanLayanan::with(['dataKematian'])->select('pengajuan_id', 'pengguna_id', 'jenis_pengajuan', 'nama_pelapor', 'nik_pelapor', 'tanggal_pengajuan', 'dokumen', 'updated_at')->where('jenis_pengajuan', "kematian")->where('status', 'selesai');
 
         if (request()->input("search.value")) {
             $data = $data->where(function ($query) {

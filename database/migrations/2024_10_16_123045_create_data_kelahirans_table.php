@@ -18,9 +18,9 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->date('tanggal_lahir');
             $table->text('tempat_lahir', 100);
-            $table->string('nama_ayah', 50);
-            $table->string('nik_ayah', 50);
-            $table->string('ktp_ayah', 50);
+            $table->string('nama_ayah', 50)->nullable();
+            $table->string('nik_ayah', 50)->nullable();
+            $table->string('ktp_ayah', 50)->nullable();
             $table->string('nama_ibu', 50);
             $table->string('nik_ibu', 50);
             $table->string('ktp_ibu', 50);

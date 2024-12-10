@@ -87,14 +87,13 @@
                 dataType: "json",
                 success: function(response) {
                     $('#tombol').prop('disabled', false);
-                    // $('#tombol').html('Sign In');
                     window.location.href = "{{ url('/home') }}";
                 },
                 error: function(err) {
                     $('#tombol').prop('disabled', false);
                     $('#tombol').html('Masuk');
-                    let error = err.responseJSON;
-                    alert('Tidak bisa login, silahkan coba lagi')
+                    let error = err.responseJSON.message;
+                    alert(error)
                 }
             });
         });

@@ -63,7 +63,11 @@
                             <td>Orang tua</td>
                             <td>:</td>
                             <td>
-                                Ayah : {{ $data->dataKelahiran[0]['nama_ayah'] }} ({{ $data->dataKelahiran[0]['nik_ayah'] }})<br />
+                                @if ($data->dataKelahiran[0]['ktp_ayah'] !== null)
+                                    Ayah : {{ $data->dataKelahiran[0]['nama_ayah'] }} ({{ $data->dataKelahiran[0]['nik_ayah'] }})<br />                                
+                                @else
+                                    Ayah : - <br />
+                                @endif
                                 Ibu : {{ $data->dataKelahiran[0]['nama_ibu'] }} ({{ $data->dataKelahiran[0]['nik_ibu'] }})
                             </td>
                         </tr>
@@ -110,7 +114,11 @@
                 1. Berkas Kartu keluarga <br />
                 <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKelahiran[0]['berkas_kk'] }}" alt="berkas KK" width="50%"> <br />
                 2. KTP ayah <br />
-                <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKelahiran[0]['ktp_ayah'] }}" alt="KTP ayah" width="50%"> <br />
+                @if ($data->dataKelahiran[0]['ktp_ayah'] !== null)
+                    <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKelahiran[0]['ktp_ayah'] }}" alt="KTP ayah" width="50%"> <br />                
+                @else
+                    tidak ada <br />
+                @endif
                 3. KTP ibu <br />
                 <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKelahiran[0]['ktp_ibu'] }}" alt="KTP ibu" width="50%"> <br />
             </div>

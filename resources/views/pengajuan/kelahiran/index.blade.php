@@ -78,7 +78,8 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return "Ayah : " + row.data_kelahiran[0].nama_ayah + "<br /> Ibu : " + row.data_kelahiran[0].nama_ibu
+                        let ayah = row.data_kelahiran[0].nama_ayah == null ? "-" : row.data_kelahiran[0].nama_ayah;
+                        return "Ayah : " + ayah + "<br /> Ibu : " + row.data_kelahiran[0].nama_ibu
                     }
                 },
                 {

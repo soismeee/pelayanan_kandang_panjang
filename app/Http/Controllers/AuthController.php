@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pelanggan;
+use App\Models\pengguna;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,13 +34,24 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if (auth()->user()->role == "user") {
-                $pelanggan = Pelanggan::where('user_id', auth()->user()->id)->first();
-                session(['nama' => $pelanggan->nama]);
-                session(['alamat' => $pelanggan->alamat]);
+                $pengguna = Pengguna::where('user_id', auth()->user()->id)->first();
+        
+                if ($pengguna) {
+                    $request->session()->put('nama', $pengguna->nama);
+                    $request->session()->put('alamat', $pengguna->alamat);
+                }
             }
-
-            return response()->json(['message' => 'Berhasil login']);
+        
+            return response()->json([
+                'message' => 'Berhasil login',
+                'session' => $request->session()->all()
+            ]);
         }
+        Auth::logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
         return response()->json(['message' => 'Gagal melakukan authentikasi'], 404);
     }
 

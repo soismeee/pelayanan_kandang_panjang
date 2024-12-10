@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'id' => intval((microtime(true) * 10000)),
-            'name' => 'administrator',
-            'email' => 'admin@mail.com',
+            'name' => 'Admin Kandang Panjang',
+            'email' => 'kandangpanjang@mail.com',
             'password' => bcrypt('123'),
             'role' => 'admin',
             'verified' => "1",
