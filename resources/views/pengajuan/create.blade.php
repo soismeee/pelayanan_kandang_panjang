@@ -122,7 +122,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nik">NIK</label>
-                    <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukan nama almarhum">
+                    <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukan nik almarhum">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
