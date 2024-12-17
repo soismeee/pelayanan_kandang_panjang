@@ -77,7 +77,7 @@
                         <tr>
                             <td>Nama almarhum</td>
                             <td>:</td>
-                            <td>{{ $data->dataKematian[0]['nama_alm'] }}</td>
+                            <td>{{ $data->dataKematian[0]['nama_alm'] }} ({{ $data->dataKematian[0]['nik'] }})</td>
                         </tr>
                         <tr>
                             <td>Jenis Kelamin</td>
@@ -123,6 +123,8 @@
                     @endif
                     3. KTP ibu <br />
                     <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKelahiran[0]['ktp_ibu'] }}" alt="KTP ibu" width="50%"> <br />
+                    4. Akta nikah <br />
+                    <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKelahiran[0]['akta_nikah'] }}" alt="akta nikah" width="50%"> <br />
                 @else
                 1. Berkas Kartu keluarga <br />
                 <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKematian[0]['berkas_kk'] }}" alt="berkas KK" width="50%"> <br />

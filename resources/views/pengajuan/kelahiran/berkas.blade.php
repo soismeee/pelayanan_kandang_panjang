@@ -22,6 +22,8 @@
                 @endif
                 3. KTP ibu <br />
                 <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKelahiran[0]['ktp_ibu'] }}" alt="KTP ibu" width="50%"> <br />
+                4. akta nikah  <br />
+                <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKelahiran[0]['akta_nikah'] }}" alt="Akta nikah" width="50%"> <br />
             </div>
         </div>
     </div>

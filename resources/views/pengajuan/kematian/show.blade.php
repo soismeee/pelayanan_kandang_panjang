@@ -38,7 +38,7 @@
                         <tr>
                             <td>Nama almarhum</td>
                             <td>:</td>
-                            <td>{{ $data->dataKematian[0]['nama_alm'] }}</td>
+                            <td>{{ $data->dataKematian[0]['nama_alm'] }} ({{ $data->dataKematian[0]['nik'] }})</td>
                         </tr>
                         <tr>
                             <td>Jenis Kelamin</td>

@@ -71,7 +71,7 @@
                     "targets": "_all",
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
-                        return row.data_kematian[0].nama_alm
+                        return row.data_kematian[0].nama_alm + "(" + row.data_kematian[0].nik + ")"
                     }
                 },
                 {
