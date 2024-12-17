@@ -53,6 +53,12 @@ class PelayananController extends Controller
         ]);
     }
 
+    public function kodePengajuan()
+    {
+        $jmldatahariini = PengajuanLayanan::selectRaw('LPAD(CONVERT(COUNT("id") + 1, char(8)) , 3,"0") as kodes')->where('tanggal_pengajuan', date('Y-m-d'))->first();
+        return "KP" . date("ymd") . $jmldatahariini['kodes'];
+    }
+
     public function store(Request $request){
         
         if ($request->jenis_pengajuan == "kelahiran") {
@@ -91,7 +97,7 @@ class PelayananController extends Controller
         $pengguna = Pengguna::where('user_id', auth()->user()->id)->first();
         
         $pengajuan = new PengajuanLayanan();
-        $pengajuan->pengajuan_id = intval((microtime(true) * 10000));
+        $pengajuan->pengajuan_id = $this->kodePengajuan();
         $pengajuan->pengguna_id = $pengguna->pengguna_id;
         $pengajuan->nama_pelapor = $request->nama_pelapor;
         $pengajuan->nik_pelapor = $request->nik_pelapor;

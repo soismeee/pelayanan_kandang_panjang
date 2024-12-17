@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="nik_pelapor">nik Pelapor</label>
-                                <input type="text" class="form-control" name="nik_pelapor" id="nik_pelapor" placeholder="Masukan nik pelapor">
+                                <input type="text" class="form-control" name="nik_pelapor" id="nik_pelapor" maxlength="16" onkeypress="return nik('event')" placeholder="Masukan nik pelapor">
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label for="alamat_pelapor">Alamat Pelapor</label>
@@ -90,11 +90,11 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="ktp_ayah">Berkas KTP Ayah</label>
-                    <input type="file" name="ktp_ayah" id="ktp_ayah" class="form-control" placeholder="Masukan ktp ayah">
+                    <input type="file" name="ktp_ayah" id="ktp_ayah" class="form-control" maxlength="16" onkeypress="return nik('event')" placeholder="Masukan ktp ayah">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="ktp_ibu">Berkas KTP Ibu</label>
-                    <input type="file" name="ktp_ibu" id="ktp_ibu" class="form-control" placeholder="Masukan ktp ibu">
+                    <input type="file" name="ktp_ibu" id="ktp_ibu" class="form-control" maxlength="16" onkeypress="return nik('event')" placeholder="Masukan ktp ibu">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="akta_nikah">Akta Nikah</label>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nik">NIK</label>
-                    <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukan nik almarhum">
+                    <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukan nik almarhum" maxlength="16" onkeypress="return nik('event')">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
@@ -159,6 +159,13 @@
                 `
             );
         });
+
+        function nik(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
 
         $(document).on('click', '#submit', function(e) {
             e.preventDefault();
