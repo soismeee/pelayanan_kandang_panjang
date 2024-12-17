@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('nama_ibu', 50);
             $table->string('nik_ibu', 50);
             $table->string('ktp_ibu', 50);
+            $table->string('akta_nikah', 50);
             $table->string('berkas_kk', 100);
             $table->timestamps();
 

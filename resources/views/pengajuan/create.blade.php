@@ -97,8 +97,12 @@
                     <input type="file" name="ktp_ibu" id="ktp_ibu" class="form-control" placeholder="Masukan ktp ibu">
                 </div>
                 <div class="col-md-12 mb-3">
+                    <label for="akta_nikah">Akta Nikah</label>
+                    <input type="file" name="akta_nikah" id="akta_nikah" class="form-control">
+                </div>
+                <div class="col-md-12 mb-3">
                     <label for="berkas_kk">Berkas Kartu keluarga</label>
-                    <input type="file" name="berkas_kk" id="berkas_kk" class="form-control" placeholder="Masukan ktp ibu">
+                    <input type="file" name="berkas_kk" id="berkas_kk" class="form-control">
                 </div>
                 <div class="col-md-12">
                     <button type="submit" id="submit" class="btn btn-primary">Buat Pengajuan</button>
@@ -117,6 +121,10 @@
                     <input type="text" class="form-control" name="nama_alm" id="nama_alm" placeholder="Masukan nama almarhum">
                 </div>
                 <div class="col-md-6 mb-3">
+                    <label for="nik">NIK</label>
+                    <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukan nama almarhum">
+                </div>
+                <div class="col-md-4 mb-3">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
                     <select name="jenis_kelamin" id="jenis_kelamin" class="form-select">
                         <option disabled selected>Pilih jenis kelamin</option>
@@ -124,11 +132,11 @@
                         <option value="P">Perempuan</option>
                     </select>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <label for="tanggal_kematian">Tanggal kematian</label>
                     <input type="date" class="form-control" name="tanggal_kematian" id="tanggal_kematian" placeholder="Tanggal kematian">
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <label for="tempat_kematian">Tempat kematian</label>
                     <input type="text" name="tempat_kematian" id="tempat_kematian" class="form-control" placeholder="Masukan tempat kematian">
                 </div>

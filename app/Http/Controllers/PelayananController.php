@@ -68,6 +68,7 @@ class PelayananController extends Controller
                 'nama_ibu' => 'required',
                 'nik_ibu' => 'required',
                 'ktp_ibu' => 'required|mimes:jpeg,jpg,png|max:2048',
+                'akta_nikah' => 'required|mimes:jpeg,jpg,png|max:2048',
             ]);
         } else {
             $request->validate([
@@ -76,6 +77,7 @@ class PelayananController extends Controller
                 'alamat_pelapor' => 'required',
                 'jenis_pengajuan' => 'required',
                 'nama_alm' => 'required',
+                'nik' => 'required',
                 'jenis_kelamin' => 'required',
                 'tanggal_kematian' => 'required',
                 'tempat_kematian' => 'required',
@@ -123,17 +125,22 @@ class PelayananController extends Controller
             $ktp_ibu->move(public_path('Pengajuan/kelahiran'), $filename_ibu);
             $kelahiran->ktp_ibu = $filename_ibu;
 
+            $akta_nikah = $request->file('akta_nikah');
+            $filename_ibu = $pengajuan->pengajuan_id . "_" .time() . "akta_nikah" .'.' . $akta_nikah->getClientOriginalExtension();
+            $akta_nikah->move(public_path('Pengajuan/kelahiran'), $filename_ibu);
+            $kelahiran->akta_nikah = $filename_ibu;
+
             $kk = $request->file('berkas_kk');
             $filename_kk = $pengajuan->pengajuan_id . "_" .time(). "berkas_kk". '.' . $kk->getClientOriginalExtension();
             $kk->move(public_path('Pengajuan/kelahiran'), $filename_kk);
             $kelahiran->berkas_kk = $filename_kk;
             $kelahiran->save();
-        }
-
-        if ($request->jenis_pengajuan == "kematian") {
+        } 
+        else {
             $kematian = new DataKematian();
             $kematian->pengajuan_id = $pengajuan->pengajuan_id;
             $kematian->nama_alm = $request->nama_alm;
+            $kematian->nik = $request->nik;
             $kematian->jenis_kelamin = $request->jenis_kelamin;
             $kematian->tanggal_kematian = $request->tanggal_kematian;
             $kematian->tempat_kematian = $request->tempat_kematian;

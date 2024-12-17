@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('pengajuan_id')->index();
             $table->string('nama_alm', 50);
+            $table->string('nik', 16);
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->date('tanggal_kematian');
             $table->text('tempat_kematian', 100);
