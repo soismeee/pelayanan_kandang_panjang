@@ -62,7 +62,7 @@
                                 <div class="col-sm-6">
                                     <div class="mb-20">
                                         <label for="no_telepon" class="form-label fw-semibold text-primary-light text-sm mb-8">Telepon</label>
-                                        <input type="text" class="form-control radius-8" id="no_telepon" name="no_telepon" placeholder="Masukan nomor telepon">
+                                        <input type="text" class="form-control radius-8" id="no_telepon" name="no_telepon" onkeypress="return nik('event')" maxlength="13" placeholder="Masukan nomor telepon">
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
@@ -91,6 +91,12 @@
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.3/dist/sweetalert2.all.min.js"></script>
     <script>
+        function nik(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
         $("#form-data").on('submit', function(event) {
             event.preventDefault();
             $('#tombol').html('Loading...');

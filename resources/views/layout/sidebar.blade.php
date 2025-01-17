@@ -78,20 +78,23 @@
 
             @can('user')
             <li class="sidebar-menu-group-title">Menu</li>
+            
+                @if (auth()->user()->pengguna()->count() > 0)
+                    <li>
+                        <a href="/form-pengajuan">
+                            <iconify-icon icon="heroicons:document" class="menu-icon"></iconify-icon>
+                            <span>Form Pengajuan</span>
+                        </a>
+                    </li>
 
-            <li>
-                <a href="/form-pengajuan">
-                    <iconify-icon icon="heroicons:document" class="menu-icon"></iconify-icon>
-                    <span>Form Pengajuan</span>
-                </a>
-            </li>
+                    <li>
+                        <a href="/data-pengajuan">
+                            <iconify-icon icon="mingcute:storage-line" class="menu-icon"></iconify-icon>
+                            <span>Master Pengajuan</span>
+                        </a>
+                    </li>    
+                @endif
 
-            <li>
-                <a href="/data-pengajuan">
-                    <iconify-icon icon="mingcute:storage-line" class="menu-icon"></iconify-icon>
-                    <span>Master Pengajuan</span>
-                </a>
-            </li>
             @endcan
         </ul>
     </div>

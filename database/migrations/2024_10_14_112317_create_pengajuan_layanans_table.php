@@ -21,6 +21,8 @@ return new class extends Migration
             $table->text('alamat_pelapor');
             $table->enum('status', ['pengajuan', 'proses', 'selesai']);
             $table->string('dokumen')->nullable();
+            $table->enum('read_admin', [0, 1])->default(0);
+            $table->enum('read_pengguna', [0, 1])->default(0);
             $table->timestamps();
 
             $table->foreign('pengguna_id')->references('pengguna_id')->on('penggunas')->onDelete('cascade');

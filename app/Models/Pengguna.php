@@ -13,4 +13,9 @@ class Pengguna extends Model
     
     protected $primaryKey = 'pengguna_id';
     public $incrementing = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

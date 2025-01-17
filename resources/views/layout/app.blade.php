@@ -37,6 +37,26 @@
                 <div class="col-auto">
                     <div class="d-flex flex-wrap align-items-center gap-3">
                         {{-- <button type="button" data-theme-toggle class="w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center"></button> --}}
+                        
+                        <div class="dropdown">
+                            <button class="has-indicator w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center" type="button" data-bs-toggle="dropdown">
+                                <iconify-icon icon="iconoir:bell" class="text-primary-light text-xl"></iconify-icon>
+                            </button>
+                            <div class="dropdown-menu to-top dropdown-menu-lg p-0">
+                                <div class="m-16 py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
+                                    <div>
+                                        <h6 class="text-lg text-primary-light fw-semibold mb-0">Notifikasi</h6>
+                                    </div>
+                                    <span class="text-primary-600 fw-semibold text-lg w-40-px h-40-px rounded-circle bg-base d-flex justify-content-center align-items-center jumlahNotifikasi">0</span>
+                                </div>
+
+                                <div class="max-h-400-px overflow-y-auto scroll-sm pe-4 notifikasi">
+                                    
+                                </div>
+
+                            </div>
+                        </div><!-- Notification dropdown end -->
+
 
                         <div class="dropdown">
                             <button class="d-flex justify-content-center align-items-center rounded-circle" type="button" data-bs-toggle="dropdown">
@@ -62,7 +82,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div><!-- Profile dropdown end -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,7 +116,75 @@
     <!-- main js -->
     <script src="/assets/js/app.js"></script>
     @stack('js')
+    @can('admin')
+    <script>
 
+        $(document).ready(function(e){
+            $.ajax({
+                url: "{{ url('getPenggunaBaru') }}",
+                type: "GET",
+                success: function(response){
+                    let data = response.data;
+                    data.forEach((params, index) => {
+                        $('.notifikasi').append(`
+                            <a href="/verifikasiPengguna/${params.id}" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
+                                <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
+                                    <div>
+                                        <h6 class="text-md fw-semibold mb-4">Pengguna baru - ${params.name}</h6>
+                                        <p class="mb-0 text-sm text-secondary-light text-w-200-px"> ${params.email}</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-secondary-light flex-shrink-0">${formatTanggal(params.created_at)}</span>
+                            </a>
+                        `);
+                    });
+                },
+                error: function(err){
+                    alert(err.responseJSON.message);
+                }
+            });
+        });
+    </script> 
+    @endcan
+
+    <script>
+        function formatTanggal(tanggal) {
+            if (!tanggal) return "Belum tersedia"; // Jika tanggal null atau undefined
+            let date = new Date(tanggal); // Konversi string tanggal ke objek Date
+            let day = String(date.getDate()).padStart(2, '0'); // Hari dengan 2 digit
+            let month = String(date.getMonth() + 1).padStart(2, '0'); // Bulan dengan 2 digit
+            let year = date.getFullYear(); // Tahun
+            return `${day}/${month}/${year}`; // Format dd-mm-yyyy
+        }
+
+        $(document).ready(function(e){
+            $.ajax({
+            url: "{{ url('getNotif') }}",
+            type: "GET",
+            success: function(response){
+                $('.jumlahNotifikasi').text(response.jumlahNotifikasi)
+                let data = response.data;
+                data.forEach((params, index) => {
+                    $('.notifikasi').append(`
+                        <a href="/readNotif/${params.pengajuan_id}" class="px-24 py-12 d-flex align-items-start gap-3 mb-2 justify-content-between">
+                            <div class="text-black hover-bg-transparent hover-text-primary d-flex align-items-center gap-3">
+                                
+                                <div>
+                                    <h6 class="text-md fw-semibold mb-4">${params.nama_pelapor}</h6>
+                                    <p class="mb-0 text-sm text-secondary-light text-w-200-px">data ${params.jenis_pengajuan} - ${params.status}</p>
+                                </div>
+                            </div>
+                            <span class="text-sm text-secondary-light flex-shrink-0">${formatTanggal(params.tanggal_pengajuan)}</span>
+                        </a>
+                    `);
+                });
+            },
+            error: function(err){
+                alert(err.responseJSON.message);
+            }
+        });
+        });
+    </script>
 </body>
         
 </html>

@@ -48,6 +48,22 @@
 <script src="/assets/sweetalert2/sweetalert2.all.min.js"></script>
 
     <script>
+        function nik(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+        
+        $(document).on('keyup', '#nik', function(e){
+            let input = $(this).val();
+            let sanitizedInput = input.replace(/[^0-9]/g, '');
+            // Jika input berubah, perbarui nilai di input field
+            if (input !== sanitizedInput) {
+                $('#nik').val(sanitizedInput);
+            }
+        })
+
         $(document).on('click', '#kelahiran', function(e){
             $('#jenis_pengajuan').val($(this).data('jenis_pengajuan'));
             $('#form').html(
@@ -82,19 +98,19 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nik_ayah">NIK Ayah</label>
-                    <input type="text" name="nik_ayah" id="nik_ayah" class="form-control" placeholder="Masukan nik ayah">
+                    <input type="text" name="nik_ayah" id="nik_ayah" class="form-control" onkeypress="return nik('event')" placeholder="Masukan nik ayah">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nik_ibu">NIK Ibu</label>
-                    <input type="text" name="nik_ibu" id="nik_ibu" class="form-control" placeholder="Masukan nik ibu">
+                    <input type="text" name="nik_ibu" id="nik_ibu" class="form-control" onkeypress="return nik('event')" placeholder="Masukan nik ibu">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="ktp_ayah">Berkas KTP Ayah</label>
-                    <input type="file" name="ktp_ayah" id="ktp_ayah" class="form-control" maxlength="16" onkeypress="return nik('event')" placeholder="Masukan ktp ayah">
+                    <input type="file" name="ktp_ayah" id="ktp_ayah" class="form-control" maxlength="16" placeholder="Masukan ktp ayah">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="ktp_ibu">Berkas KTP Ibu</label>
-                    <input type="file" name="ktp_ibu" id="ktp_ibu" class="form-control" maxlength="16" onkeypress="return nik('event')" placeholder="Masukan ktp ibu">
+                    <input type="file" name="ktp_ibu" id="ktp_ibu" class="form-control" maxlength="16" placeholder="Masukan ktp ibu">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="akta_nikah">Akta Nikah</label>
@@ -122,7 +138,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nik">NIK</label>
-                    <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukan nik almarhum" maxlength="16" onkeypress="return nik('event')">
+                    <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukan nik almarhum" maxlength="16">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="jenis_kelamin">Jenis Kelamin</label>
@@ -159,13 +175,6 @@
                 `
             );
         });
-
-        function nik(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode
-            if (charCode > 31 && (charCode < 48 || charCode > 57))
-                return false;
-            return true;
-        }
 
         $(document).on('click', '#submit', function(e) {
             e.preventDefault();

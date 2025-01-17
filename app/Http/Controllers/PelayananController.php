@@ -46,11 +46,15 @@ class PelayananController extends Controller
     }
 
     public function create(){
-        return view('pengajuan.create', [
-            'title' => 'Pengajuan',
-            'menu' => 'Pengajuan',
-            'submenu' => 'Pengajuan'
-        ]);
+        if (!auth()->user()->pengguna) {
+            return redirect('/home');
+        }else{
+            return view('pengajuan.create', [
+                'title' => 'Pengajuan',
+                'menu' => 'Pengajuan',
+                'submenu' => 'Pengajuan'
+            ]);
+        }
     }
 
     public function kodePengajuan()
@@ -194,6 +198,10 @@ class PelayananController extends Controller
         $pengajuan = PengajuanLayanan::find($id);
         $pengajuan->status = $request->status;
         $pengajuan->created_at = $request->created_at;
+        
+        if ($request->status == "selesai") {
+            $pengajuan->read_pengguna = "0";
+        }
 
         if ($request->hasFile('dokumen')) {
             $file = $request->file('dokumen');

@@ -30,23 +30,69 @@ class DashbaordController extends Controller
                 'user' => User::where('verified', "0")->get(),
             ]);
         } else {
-            $pengguna = Pengguna::where('user_id', $user->id);
-            if ($pengguna->count() == 0) {
+            if (!$user->pengguna) {
                 return view('home.first-page', [
                     'title' => 'Lengkapi data',
                 ]);
+            }else{
+                $user_pengguna = Pengguna::where('user_id', $user->id)->first();
+                $pengajuan = PengajuanLayanan::where('status', 'pengajuan')->where('pengguna_id', $user_pengguna->pengguna_id);
+                
+                return view('home.index', [
+                    'title' => 'Dashboard',
+                    'data' => $data,
+                    'pengajuan' => $pengajuan->get(),
+                    'user' => User::where('verified', "0")->get(),
+                ]);
             }
-
-            $user_pengguna = Pengguna::where('user_id', $user->id)->first();
-            $pengajuan = PengajuanLayanan::where('status', 'pengajuan')->where('pengguna_id', $user_pengguna->pengguna_id);
-            
-            return view('home.index', [
-                'title' => 'Dashboard',
-                'data' => $data,
-                'pengajuan' => $pengajuan->get(),
-                'user' => User::where('verified', "0")->get(),
-            ]);
         }
+    }
+
+    public function getNewUser(){
+        $user = User::where('verified', "0");
+        return response()->json(['statusCode' => 200, 'data' => $user->get(), 'jumlahPengguna' => $user->count()]);
+    }
+
+    public function verifiedPengguna($id){
+        $user = User::find($id);
+        $user->verified = "1";
+        $user->update();
+        return redirect('/pengguna');
+    }
+
+    public function getNotification(){
+        $user = auth()->user();
+        if ($user->role == "admin") {
+            $pengajuan = PengajuanLayanan::where('status', 'pengajuan')->where('read_admin', "0");
+            return response()->json(['statusCode' => 200, 'data' => $pengajuan->get(), 'jumlahNotifikasi' => $pengajuan->count()]);
+        } else {
+            if (!$user->pengguna) {
+                return response()->json(['statusCode' => 200, 'data' => [], 'jumlahNotifikasi' => 0]);
+            }else{
+                $pengguna = Pengguna::where('user_id', $user->id)->first();
+                $pengajuan = PengajuanLayanan::where('status', "!=" ,'pengajuan')->where('pengguna_id', $pengguna->pengguna_id)->where('read_pengguna', "0");
+                return response()->json(['statusCode' => 200, 'data' => $pengajuan->get(), 'jumlahNotifikasi' => $pengajuan->count()]);
+            }
+        }
+    }
+
+    public function readNotification($id){
+        $user = auth()->user();
+        $pengajuan = PengajuanLayanan::find($id);
+        if ($user->role == "admin") {
+            if ($pengajuan->jenis_pengajuan == "kelahiran") {
+                $link = "/pengajuan_kelahiran" . "/" . $pengajuan->pengajuan_id;
+            } else {
+                $link = "/pengajuan_kematian" . "/" . $pengajuan->pengajuan_id;
+            }
+            
+            $pengajuan->read_admin = "1";
+        } else {
+            $link = "/pengajuan" . "/" . $pengajuan->pengajuan_id;
+            $pengajuan->read_pengguna = "1";            
+        }
+        $pengajuan->update();
+        return redirect($link);
     }
 
     public function store(Request $request){

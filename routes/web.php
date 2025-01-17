@@ -17,6 +17,10 @@ Route::post('/regist', [AuthController::class, 'store']);
 Route::get('/', [DashbaordController::class, 'index'])->middleware('auth');
 Route::get('/home', [DashbaordController::class, 'index'])->name('home')->name('auth');
 Route::get('/profil', [DashbaordController::class, 'profil'])->name('home')->name('auth');
+Route::get('/getNotif', [DashbaordController::class, 'getNotification'])->name('auth');
+Route::get('/getPenggunaBaru', [DashbaordController::class, 'getNewUser'])->name('auth');
+Route::get('/readNotif/{id}', [DashbaordController::class, 'readNotification'])->name('auth');
+Route::get('/verifikasiPengguna/{id}', [DashbaordController::class, 'verifiedPengguna'])->name('auth');
 Route::post('/storePelanggan', [DashbaordController::class, 'store'])->middleware('auth');
 Route::post('/updateProfil/{id}', [DashbaordController::class, 'update'])->middleware('auth');
 

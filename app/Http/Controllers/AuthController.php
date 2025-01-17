@@ -33,6 +33,17 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            // Cek apakah pengguna aktif
+            if (auth()->user()->status != 'active') {
+                Auth::logout();
+    
+                request()->session()->invalidate();
+                request()->session()->regenerateToken();
+    
+                return response()->json(['message' => 'Akun Anda tidak aktif. Hubungi administrator untuk informasi lebih lanjut.'], 403);
+            }
+
             if (auth()->user()->role == "user") {
                 $pengguna = Pengguna::where('user_id', auth()->user()->id)->first();
         
