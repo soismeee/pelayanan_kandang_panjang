@@ -26,6 +26,9 @@
             font-weight: bold
         }
     </style>
+    <div class="tengah">
+        <img src="/assets/images/kop_surat.png" width="100%">
+    </div>
     <h4 class="tengah">LAPORAN DATA KELAHIRAN</h4>
     <h5 class="tengah">Pertanggal {{ $tanggal }}</h5>
     <table id="table">
@@ -53,6 +56,22 @@
                 </tr>
             @endforeach
         </tbody>
+    </table>
+    <table>
+        <tr>
+            <td>
+                <br />
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Tanda tangan
+                <br />
+                <br />
+                <br />
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                (Lurah Kandang Panjang)
+            </td>
+        </tr>
     </table>
 </body>
 </html>

@@ -45,12 +45,24 @@ class PelayananController extends Controller
         ]);
     }
 
-    public function create(){
+    public function formKematian(){
         if (!auth()->user()->pengguna) {
             return redirect('/home');
         }else{
-            return view('pengajuan.create', [
-                'title' => 'Pengajuan',
+            return view('pengajuan.form_kematian', [
+                'title' => 'Pengajuan Kematian',
+                'menu' => 'Pengajuan',
+                'submenu' => 'Pengajuan'
+            ]);
+        }
+    }
+
+    public function formKelahiran(){
+        if (!auth()->user()->pengguna) {
+            return redirect('/home');
+        }else{
+            return view('pengajuan.form_kelahiran', [
+                'title' => 'Pengajuan Kelahiran',
                 'menu' => 'Pengajuan',
                 'submenu' => 'Pengajuan'
             ]);

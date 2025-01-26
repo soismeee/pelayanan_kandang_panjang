@@ -30,7 +30,9 @@ Route::post('/penggunaDel/{id}', [PenggunaController::class, 'destroy'])->middle
 Route::post('/penggunaAct/{id}', [PenggunaController::class, 'isActive'])->middleware('auth');
 
 Route::get('/data-pengajuan', [PelayananController::class, 'index'])->middleware('auth');
-Route::get('/form-pengajuan', [PelayananController::class, 'create'])->middleware('auth');
+// Route::get('/form-pengajuan', [PelayananController::class, 'create'])->middleware('auth');
+Route::get('/pengajuan-kematian', [PelayananController::class, 'formKematian'])->middleware('auth');
+Route::get('/pengajuan-kelahiran', [PelayananController::class, 'formKelahiran'])->middleware('auth');
 Route::get('/pengajuan/{id}', [PelayananController::class, 'show'])->middleware('auth');
 Route::post('/storePengajuan', [PelayananController::class, 'store'])->middleware('auth');
 Route::post('/jsonPengajuan', [PelayananController::class, 'json'])->middleware('auth');

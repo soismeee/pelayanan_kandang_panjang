@@ -26,6 +26,9 @@
             font-weight: bold
         }
     </style>
+        <div class="tengah">
+            <img src="/assets/images/kop_surat.png" width="100%">
+        </div>
     <h4 class="tengah">LAPORAN DATA KEMATIAN</h4>
     <h5 class="tengah">Pertanggal {{ $tanggal }}</h5>
     <table id="table">
