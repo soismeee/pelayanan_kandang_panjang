@@ -14,7 +14,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::post('/auth', [AuthController::class, 'authenticate']);
 Route::post('/regist', [AuthController::class, 'store']);
 
-Route::get('/', [DashbaordController::class, 'landingpage']);
+Route::get('/', [DashbaordController::class, 'landingpage'])->middleware('guest');
 Route::get('/home', [DashbaordController::class, 'index'])->name('home')->name('auth');
 Route::get('/profil', [DashbaordController::class, 'profil'])->name('home')->name('auth');
 Route::get('/getNotif', [DashbaordController::class, 'getNotification'])->name('auth');

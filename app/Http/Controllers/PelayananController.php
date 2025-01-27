@@ -313,23 +313,23 @@ class PelayananController extends Controller
         if ($ktp_pelapor !== null) {
             $filename_ktp_pelapor = "ktp_pelapor" . "_" .time() ."ktp_pelapor". '.' . $ktp_pelapor->getClientOriginalExtension();
 
-            $ktp_pelapor->move(public_path('Pengajuan/kelahiran'), $filename_ktp_pelapor);
+            $ktp_pelapor->move(public_path('Pengajuan/pengajuan'), $filename_ktp_pelapor);
             $pengajuan->ktp_pelapor = $filename_ktp_pelapor;
         }
         
-        $saksi1 = $request->file('saksi1');
-        if ($saksi1 !== null) {
-            $filename_saksi1 = "saksi1" . "_" .time() ."saksi1". '.' . $saksi1->getClientOriginalExtension();
+        $ktp_saksi1 = $request->file('ktp_saksi1');
+        if ($ktp_saksi1 !== null) {
+            $filename_ktp_saksi1 = "ktp_saksi1" . "_" .time() ."ktp_saksi1". '.' . $ktp_saksi1->getClientOriginalExtension();
 
-            $saksi1->move(public_path('Pengajuan/kelahiran'), $filename_saksi1);
-            $pengajuan->saksi1 = $filename_saksi1;
+            $ktp_saksi1->move(public_path('Pengajuan/pelayanan'), $filename_ktp_saksi1);
+            $pengajuan->ktp_saksi1 = $filename_ktp_saksi1;
         }
-        $saksi2 = $request->file('saksi2');
-        if ($saksi2 !== null) {
-            $filename_saksi2 = "saksi2" . "_" .time() ."saksi2". '.' . $saksi2->getClientOriginalExtension();
+        $ktp_saksi2 = $request->file('ktp_saksi2');
+        if ($ktp_saksi2 !== null) {
+            $filename_ktp_saksi2 = "ktp_saksi2" . "_" .time() ."ktp_saksi2". '.' . $ktp_saksi2->getClientOriginalExtension();
 
-            $saksi2->move(public_path('Pengajuan/kelahiran'), $filename_saksi2);
-            $pengajuan->saksi2 = $filename_saksi2;
+            $ktp_saksi2->move(public_path('Pengajuan/pelayanan'), $filename_ktp_saksi2);
+            $pengajuan->ktp_saksi2 = $filename_ktp_saksi2;
         }
 
         $pengajuan->save();

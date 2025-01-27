@@ -32,6 +32,81 @@
                             <td>:</td>
                             <td>{{ $data->status }}</td>
                         </tr>
+
+                        <tr>
+                            <td colspan="3">DATA PELAPOR</td>
+                        </tr>
+                        <tr>
+                            <td>Pelapor</td>
+                            <td>:</td>
+                            <td>{{ $data->nama_pelapor }} ({{ $data->nik_pelapor }})
+                                <br />
+                                Tgl Lahir : {{ date('d/m/Y', strtotime($data->tgl_lahir_pelapor)) }}<br />
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Pekerjaan </td>
+                            <td>:</td>
+                            <td>{{ $data->pekerjaan_pelapor }}</td>
+                        </tr>
+                        <tr>
+                            <td>Alamat </td>
+                            <td>:</td>
+                            <td>{{ $data->alamat_pelapor }}</td>
+                        </tr>
+
+                        <tr>
+                            <td>No. Telp </td>
+                            <td>:</td>
+                            <td>{{ $data->no_hp }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">DATA SAKSI 1</td>
+                        </tr>
+                        <tr>
+                            <td>Saksi 1</td>
+                            <td>:</td>
+                            <td>{{ $data->nama_saksi1 }} ({{ $data->nik_saksi1 }})
+                                <br />
+                                Tgl Lahir : {{ date('d/m/Y', strtotime($data->tgl_lahir_saksi1)) }}<br />
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Pekerjaan </td>
+                            <td>:</td>
+                            <td>{{ $data->pekerjaan_saksi1 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Alamat </td>
+                            <td>:</td>
+                            <td>{{ $data->alamat_saksi1 }}</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="3">DATA SAKSI 2</td>
+                        </tr>
+                        <tr>
+                            <td>Saksi 2</td>
+                            <td>:</td>
+                            <td>{{ $data->nama_saksi2 }} ({{ $data->nik_saksi2 }})
+                                <br />
+                                Tgl Lahir : {{ date('d/m/Y', strtotime($data->tgl_lahir_saksi2)) }}<br />
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Pekerjaan </td>
+                            <td>:</td>
+                            <td>{{ $data->pekerjaan_saksi2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Alamat </td>
+                            <td>:</td>
+                            <td>{{ $data->alamat_saksi2 }}</td>
+                        </tr>
+
                         <tr>
                             <td colspan="3">DATA LENGKAP</td>
                         </tr>
@@ -43,21 +118,34 @@
                         <tr>
                             <td>Jenis Kelamin</td>
                             <td>:</td>
-                            <td>@if ($data->dataKematian[0]['jenis_kelamin'] == "L")
-                                Laki-laki
-                            @else
-                                Perempuan
-                            @endif</td>
+                            <td>{{ $data->dataKematian[0]['jenis_kelamin'] == "L" ? "Laki-laki" : "Perempuan" }}</td>
                         </tr>
                         <tr>
-                            <td>Tanggal kematian</td>
+                            <td>Tempat, tgl lahir</td>
                             <td>:</td>
-                            <td>{{ date('d-m-Y', strtotime($data->dataKematian[0]['tanggal_kematian'])) }}</td>
+                            <td>{{ $data->dataKematian[0]['tempat_lahir'] }}, {{ date('d-m-Y', strtotime($data->dataKematian[0]['tanggal_lahir'])) }}</td>
                         </tr>
                         <tr>
-                            <td>Tempat kematian</td>
+                            <td>Data Almarhum</td>
                             <td>:</td>
-                            <td>{{ $data->dataKematian[0]['tempat_kematian'] }}</td>
+                            <td>
+                                Agama : {{ $data->dataKematian[0]['agama'] }} <br />
+                                Pekerjaan : {{ $data->dataKematian[0]['pekerjaan'] }} <br />
+                                Alamat : {{ $data->dataKematian[0]['alamat'] }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tempat, tgl kematian</td>
+                            <td>:</td>
+                            <td>{{ $data->dataKematian[0]['tempat_kematian'] }}, {{ date('d-m-Y', strtotime($data->dataKematian[0]['tanggal_kematian'])) }}</td>
+                        </tr>
+                        <tr>
+                            <td>Data Kematian</td>
+                            <td>:</td>
+                            <td>
+                                Sebab kematian : {{ $data->dataKematian[0]['sebab_kematian'] }} <br />
+                                Yang menerangkan : {{ $data->dataKematian[0]['yang_menerangkan'] }}
+                            </td>
                         </tr>
                     </table>
                     <form action="/pengajuanProses/{{ $data->pengajuan_id }}" method="POST" enctype="multipart/form-data">
@@ -105,6 +193,20 @@
                 <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKematian[0]['berkas_ktp'] }}" alt="berkas KTP" width="50%"> <br />
                 3. Berkas AKTA <br />
                 <img src="/Pengajuan/{{ $data->jenis_pengajuan }}/{{ $data->dataKematian[0]['berkas_akta'] }}" alt="berkas Akta" width="50%"> <br />
+                <ul>
+                    <li>
+                        KTP Pelapor <br />
+                        <img src="/Pengajuan/pelayanan/{{ $data->ktp_pelapor }}" alt="KTP Pelapor" width="50%"> <br />
+                    </li>   
+                    <li>
+                        KTP saksi 1<br />
+                        <img src="/Pengajuan/pelayanan/{{ $data->ktp_saksi1 }}" alt="KTP saksi 1" width="50%"> <br />
+                    </li>   
+                    <li>
+                        KTP saksi 2<br />
+                        <img src="/Pengajuan/pelayanan/{{ $data->ktp_saksi2 }}" alt="KTP saksi 2" width="50%"> <br />
+                    </li>   
+                </ul>    
             </div>
         </div>
     </div>
