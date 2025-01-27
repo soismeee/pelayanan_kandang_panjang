@@ -49,6 +49,7 @@ class AuthController extends Controller
         
                 if ($pengguna) {
                     $request->session()->put('nama', $pengguna->nama);
+                    $request->session()->put('no_telepon', $pengguna->no_telepon);
                     $request->session()->put('alamat', $pengguna->alamat);
                 }
             }

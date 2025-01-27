@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Hash;
 
 class DashbaordController extends Controller
 {
+
+    public function landingpage(){
+        return view('home.landingpage', [
+            'title' => 'Pelayanan Kandang Panjang',
+        ]);
+    }
     public function index(){
         
         $data = [
