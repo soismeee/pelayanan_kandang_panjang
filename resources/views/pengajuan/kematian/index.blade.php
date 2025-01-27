@@ -20,6 +20,7 @@
                         <th scope="col">Data kematian</th>
                         <th scope="col">Tgl Pengajuan</th>
                         <th scope="col">Berkas</th>
+                        <th scope="col">Dokumen</th>
                         <th scope="col">Status</th>
                         <th scope="col">Aksi</th>
                     </tr>
@@ -94,6 +95,13 @@
                     "defaultContent": "-",
                     "render": function(data, type, row, meta){
                         return `<a href="/berkaskematian/`+row.pengajuan_id+`" class="btn btn-sm btn-primary">Lihat</a>`
+                    }
+                },
+                {
+                    "targets": "_all",
+                    "defaultContent": "-",
+                    "render": function(data, type, row, meta){
+                        return `<a href="/createDocKmt/`+row.pengajuan_id+`" class="btn btn-sm btn-info">Cetak Dokumen</a>`
                     }
                 },
                 {

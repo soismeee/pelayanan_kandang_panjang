@@ -705,4 +705,26 @@ class PelayananController extends Controller
             'data' => $data
         ]);
     }
+
+    public function createDocumentKelahiran($id){
+        $data = PengajuanLayanan::with(['dataKelahiran'])->find($id);
+        // return $data;
+        return view('pengajuan.create_dokumen.kelahiran', [
+            'title' => 'Buat dokumen kelahiran',
+            'tanggal' => date('Y-m-d'),
+            'nomor' => ' ',
+            'data' => $data
+        ]);
+    }
+    
+    public function createDocumentKematian($id){
+        $data = PengajuanLayanan::with(['dataKematian'])->find($id);
+        // return $data;
+        return view('pengajuan.create_dokumen.kematian', [
+            'title' => 'Buat dokumen kematian',
+            'tanggal' => date('Y-m-d'),
+            'nomor' => ' ',
+            'data' => $data
+        ]);
+    }
 }

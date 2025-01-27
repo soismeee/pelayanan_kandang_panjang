@@ -64,3 +64,6 @@ Route::post('/cetakkelahiran', [LaporanController::class, 'cetakKelahiran'])->mi
 Route::get('/laporan_mt', [LaporanController::class, 'indexKematian'])->middleware('auth');
 Route::post('/lihatlaporankematian', [LaporanController::class, 'cekKematian'])->middleware('auth');
 Route::post('/cetakkematian', [LaporanController::class, 'cetakKematian'])->middleware('auth');
+
+Route::get('/createDocLhr/{id}', [PelayananController::class, 'createDocumentKelahiran'])->middleware('auth');
+Route::get('/createDocKmt/{id}', [PelayananController::class, 'createDocumentKematian'])->middleware('auth');
