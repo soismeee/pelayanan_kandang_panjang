@@ -28,12 +28,12 @@
                             </div>
                             <div class="col-md-4 mb-2">
                                 <label for="tgl_lahir_pelapor">Tanggal Lahir Pelapor</label>
-                                <input type="date" class="form-control" name="tgl_lahir_pelapor" id="tgl_lahir_pelapor" placeholder="Masukan nik pelapor">
+                                <input type="date" class="form-control" name="tgl_lahir_pelapor" id="tgl_lahir_pelapor">
                                 <span id="span_tgl_lahir_pelapor"></span>        
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="no_hp">Telepon Pelapor</label>
-                                <input type="text" class="form-control" name="no_hp" id="no_hp" maxlength="16" value="{{ auth()->user()->pengguna->no_telepon }}" onkeypress="return nik('event')" placeholder="Masukan nik pelapor">
+                                <input type="text" class="form-control" name="no_hp" id="no_hp" maxlength="16" value="{{ auth()->user()->pengguna->no_telepon }}" onkeypress="return nik('event')" placeholder="Masukan nomor telepon pelapor">
                                 <span id="span_no_hp"></span>        
                             </div>
                             <div class="col-md-6 mb-2">
@@ -60,7 +60,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="tgl_lahir_saksi1">Tanggal Lahir saksi 1</label>
-                                <input type="date" class="form-control" name="tgl_lahir_saksi1" id="tgl_lahir_saksi1" placeholder="Masukan nik saksi1">
+                                <input type="date" class="form-control" name="tgl_lahir_saksi1" id="tgl_lahir_saksi1">
                                 <span id="span_nama_tgl_lahir_saksi1"></span>    
                             </div>
                             <div class="col-md-6 mb-2">
@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="tgl_lahir_saksi2">Tanggal Lahir saksi 2</label>
-                                <input type="date" class="form-control" name="tgl_lahir_saksi2" id="tgl_lahir_saksi2" placeholder="Masukan nik saksi2">
+                                <input type="date" class="form-control" name="tgl_lahir_saksi2" id="tgl_lahir_saksi2">
                                 <span id="span_nama_tgl_lahir_saksi2"></span>    
                             </div>
                             <div class="col-md-6 mb-2">
@@ -112,7 +112,7 @@
                             </div>
                             <div class="col-md-3 mb-2">
                                 <label for="nik">NIK</label>
-                                <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukan nik almarhum" maxlength="16">
+                                <input type="text" class="form-control" name="nik" id="nik" placeholder="Masukan nik almarhum" maxlength="16" onkeypress="return nik('event')">
                                 <span id="span_nik"></span>    
                             </div>
                             <div class="col-md-3 mb-2">
@@ -126,7 +126,7 @@
                             </div>
                             <div class="col-md-3 mb-2">
                                 <label for="tanggal_lahir">Tanggal lahir</label>
-                                <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir" placeholder="Tanggal lahir">
+                                <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir">
                                 <span id="span_tanggal_lahir"></span>    
                             </div>
                             <div class="col-md-3 mb-2">
@@ -175,18 +175,18 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="yang_menerangkan">Yang Menerangkan</label>
-                                <input type="text" name="yang_menerangkan" id="yang_menerangkan" class="form-control" placeholder="Masukan sebab kematian">
+                                <input type="text" name="yang_menerangkan" id="yang_menerangkan" class="form-control" placeholder="Masukan yang menerangkan">
                                 <span id="span_yang_menerangkan"></span>    
                             </div>
 
                             <div class="col-md-6 mb-2">
                                 <label for="nama_kepala_keluarga">Nama kepala Keluarga</label>
-                                <input type="text" name="nama_kepala_keluarga" id="nama_kepala_keluarga" class="form-control" placeholder="Masukan nama ibu">
+                                <input type="text" name="nama_kepala_keluarga" id="nama_kepala_keluarga" class="form-control" placeholder="Masukan nama kepala keluarga">
                                 <span id="span_nama_kepala_keluarga"></span>    
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="nomor_keluarga">Nomor Kartu Keluarga</label>
-                                <input type="text" name="nomor_keluarga" id="nomor_keluarga" class="form-control" maxlength="16" onkeypress="return nik('event')" placeholder="Masukan nik ayah">
+                                <input type="text" name="nomor_keluarga" id="nomor_keluarga" class="form-control" maxlength="16" onkeypress="return nik('event')" placeholder="Masukan nomor kartu keluarga">
                                 <span id="span_nomor_keluarga"></span>    
                             </div>
 
